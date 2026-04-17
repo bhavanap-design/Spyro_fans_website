@@ -1,27 +1,28 @@
-import { useEffect, useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 
 /**
- * Fan speed slider — range 40–100.
+ * Fan speed slider — range 55–125 RPM.
  * Updates a CSS custom property for the blue fill track.
  *
  * Props:
- *   speed        {number}   current speed value (40–100)
+ *   speed        {number}   current speed value (55–125)
  *   onChange     {fn}       called with new number on change
- *   isDragging   {boolean}  disables auto-rotation indicator
+ *   isDragging   {boolean}  shows "Manual" indicator when user drags the 3D fan
  */
 export default function SpeedControlSlider({ speed, onChange, isDragging }) {
   const sliderRef = useRef(null);
+  const min = 55;
+  const max = 125;
 
   // Keep the CSS gradient track in sync with the slider value
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!sliderRef.current) return;
-    const min = 40, max = 100;
     const pct = ((speed - min) / (max - min)) * 100;
     sliderRef.current.style.setProperty('--pct', `${pct}%`);
   }, [speed]);
 
   // Labels for tick marks
-  const ticks = [40, 55, 70, 85, 100];
+  const ticks = [55, 70, 85, 100, 115, 125];
 
   return (
     <div className="w-full select-none">
@@ -45,7 +46,7 @@ export default function SpeedControlSlider({ speed, onChange, isDragging }) {
           >
             {speed}
             <span className="text-xs font-normal ml-0.5" style={{ color: 'var(--text-muted)' }}>
-              RPM%
+              RPM
             </span>
           </span>
         </div>
@@ -55,12 +56,13 @@ export default function SpeedControlSlider({ speed, onChange, isDragging }) {
       <input
         ref={sliderRef}
         type="range"
-        min={40}
-        max={100}
+        min={min}
+        max={max}
         step={1}
         value={speed}
         onChange={(e) => onChange(Number(e.target.value))}
         className="speed-slider"
+        aria-label={`Fan speed: ${speed} RPM`}
       />
 
       {/* Tick labels */}
@@ -78,9 +80,9 @@ export default function SpeedControlSlider({ speed, onChange, isDragging }) {
 
       {/* Speed description */}
       <p className="text-xs mt-2" style={{ color: 'var(--text-muted)' }}>
-        {speed <= 50
+        {speed <= 70
           ? 'Gentle circulation — destratification mode'
-          : speed <= 70
+          : speed <= 100
           ? 'Comfort cooling — recommended for occupied spaces'
           : 'High performance — maximum airflow output'}
       </p>

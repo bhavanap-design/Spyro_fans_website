@@ -16,6 +16,13 @@
   --shadow-lg:     0 8px 48px rgba(0,0,0,0.12);
   --glass-bg:      rgba(255,255,255,0.70);
   --glass-border:  rgba(0,0,0,0.06);
+  /* Brand / accent */
+  --accent-blue:   #007BC9;
+  --accent-red:    #E52929;
+  /* Typography stacks */
+  --font-display:  'Poppins', 'Inter', system-ui, sans-serif;
+  --font-body:     'Inter', system-ui, sans-serif;
+  --font-mono:     'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
 }
 
 /* ─── Dark theme overrides ─── */
@@ -31,6 +38,9 @@
   --shadow-lg:     0 8px 48px rgba(0,0,0,0.60);
   --glass-bg:      rgba(255,255,255,0.04);
   --glass-border:  rgba(255,255,255,0.08);
+  /* Brand / accent — same in both themes */
+  --accent-blue:   #007BC9;
+  --accent-red:    #E52929;
 }
 
 html {
@@ -41,7 +51,7 @@ body {
   margin: 0;
   background-color: var(--bg-base);
   color: var(--text-primary);
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: 'Poppins', 'Inter', system-ui, sans-serif;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   /* Smooth theme transitions */

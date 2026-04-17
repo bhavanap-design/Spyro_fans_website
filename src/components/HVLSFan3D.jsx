@@ -1,175 +1,266 @@
-import { useRef, Suspense } from 'react';
+import { useRef, useMemo, Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Environment, ContactShadows, Float } from '@react-three/drei';
+import { Environment, Float, OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
+import {
+  getBladeShape,
+  BLADE_EXTRUDE,
+  BLADE_MAT,
+  HUB_MAT,
+  BRACKET_MAT,
+  TIP_CAP_MAT,
+  ROD_MAT,
+  BOLT_MAT,
+  SCREW_MAT,
+  BLADE_ANGLES,
+  getBrushedAluminumTexture,
+} from './fan-geometry';
 
-/**
- * Single fan blade — elongated ellipsoid tapered shape
- */
+/** Single flat rectangular blade with blue tip cap */
 function Blade({ angle }) {
-  const bladeRef = useRef();
-
-  // Slight twist/taper using a custom shape
-  const shape = new THREE.Shape();
-  shape.moveTo(0, 0);
-  shape.bezierCurveTo(0.3, 0.4, 0.5, 1.8, 0.2, 3.2);
-  shape.bezierCurveTo(0.0, 3.6, -0.2, 3.6, -0.2, 3.2);
-  shape.bezierCurveTo(-0.5, 1.8, -0.3, 0.4, 0, 0);
-
-  const extrudeSettings = {
-    depth: 0.06,
-    bevelEnabled: true,
-    bevelSegments: 3,
-    bevelSize: 0.04,
-    bevelThickness: 0.02,
-  };
+  const shape = useMemo(() => getBladeShape(), []);
+  const roughMap = useMemo(() => getBrushedAluminumTexture(), []);
 
   return (
     <group rotation={[0, (angle * Math.PI) / 180, 0]}>
-      {/* Position blade radiating outward */}
-      <mesh
-        ref={bladeRef}
-        position={[0, 0, 1.0]}
-        rotation={[-Math.PI / 2 + 0.15, 0, 0]}
-        castShadow
-      >
-        <extrudeGeometry args={[shape, extrudeSettings]} />
-        <meshStandardMaterial
-          color="#c0c8d0"
-          metalness={0.85}
-          roughness={0.15}
-          envMapIntensity={1.5}
-        />
+      {/* Flat aluminum blade body */}
+      <mesh rotation={[-Math.PI / 2 + 0.06, 0, 0]} castShadow>
+        <extrudeGeometry args={[shape, BLADE_EXTRUDE]} />
+        <meshPhysicalMaterial {...BLADE_MAT} roughnessMap={roughMap} />
+      </mesh>
+
+      {/* Blue plastic tip cap — positioned at blade tip in +Y shape space */}
+      <mesh position={[0, 0.24, -3.82]} rotation={[-Math.PI / 2 + 0.06, 0, 0]}>
+        <boxGeometry args={[0.34, 0.18, 0.042]} />
+        <meshPhysicalMaterial {...TIP_CAP_MAT} />
       </mesh>
     </group>
   );
 }
 
-/**
- * The hub / motor housing at the center
- */
+/** Rectangular mounting bracket with hex bolt details and gusset */
+function MountingBracket({ angle }) {
+  return (
+    <group rotation={[0, (angle * Math.PI) / 180, 0]}>
+      {/* Main bracket plate */}
+      <mesh position={[0, 0.03, -0.65]} castShadow>
+        <boxGeometry args={[0.30, 0.035, 0.50]} />
+        <meshPhysicalMaterial {...BRACKET_MAT} />
+      </mesh>
+      {/* Gusset reinforcement plate on top */}
+      <mesh position={[0, 0.06, -0.55]} castShadow>
+        <boxGeometry args={[0.16, 0.02, 0.25]} />
+        <meshPhysicalMaterial {...BRACKET_MAT} />
+      </mesh>
+      {/* 6 hex bolts (3×2 grid) */}
+      {[-0.09, 0, 0.09].flatMap((x) =>
+        [-0.48, -0.82].map((z) => (
+          <group key={`${x}${z}`} position={[x, 0.055, z]}>
+            <mesh>
+              <cylinderGeometry args={[0.018, 0.018, 0.014, 6]} />
+              <meshPhysicalMaterial {...SCREW_MAT} />
+            </mesh>
+            <mesh position={[0, -0.012, 0]}>
+              <cylinderGeometry args={[0.008, 0.008, 0.015, 8]} />
+              <meshPhysicalMaterial {...SCREW_MAT} />
+            </mesh>
+          </group>
+        )),
+      )}
+    </group>
+  );
+}
+
+/** Central motor hub with brand disc, logo, and bolt ring */
 function Hub() {
   return (
     <group>
-      {/* Main motor cylinder */}
+      {/* Motor cylinder */}
       <mesh castShadow>
-        <cylinderGeometry args={[0.55, 0.55, 0.35, 32]} />
-        <meshStandardMaterial color="#888fa0" metalness={0.9} roughness={0.1} />
+        <cylinderGeometry args={[0.48, 0.48, 0.26, 48]} />
+        <meshPhysicalMaterial {...HUB_MAT} />
       </mesh>
-      {/* Cap top */}
-      <mesh position={[0, 0.22, 0]}>
-        <cylinderGeometry args={[0.42, 0.55, 0.12, 32]} />
-        <meshStandardMaterial color="#a0a8b8" metalness={0.9} roughness={0.1} />
+
+      {/* Bottom lip ring */}
+      <mesh position={[0, -0.15, 0]}>
+        <cylinderGeometry args={[0.52, 0.48, 0.04, 48]} />
+        <meshPhysicalMaterial {...HUB_MAT} />
       </mesh>
-      {/* Cap bottom */}
-      <mesh position={[0, -0.22, 0]}>
-        <cylinderGeometry args={[0.55, 0.42, 0.12, 32]} />
-        <meshStandardMaterial color="#a0a8b8" metalness={0.9} roughness={0.1} />
+
+      {/* Brand disc (bottom face — visible from below) */}
+      <mesh position={[0, -0.18, 0]}>
+        <cylinderGeometry args={[0.2, 0.2, 0.015, 32]} />
+        <meshPhysicalMaterial color="#FFFFFF" metalness={0.2} roughness={0.5} />
       </mesh>
-      {/* Center bolt */}
-      <mesh position={[0, 0.32, 0]}>
-        <cylinderGeometry args={[0.12, 0.12, 0.08, 12]} />
-        <meshStandardMaterial color="#E52929" metalness={0.7} roughness={0.2} />
+
+      {/* Spyro "S" logo — blue half-arc */}
+      <mesh position={[-0.035, -0.195, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <torusGeometry args={[0.06, 0.02, 8, 16, Math.PI]} />
+        <meshPhysicalMaterial color="#007BC9" roughness={0.4} />
       </mesh>
+
+      {/* Spyro "S" logo — red half-arc */}
+      <mesh position={[0.035, -0.195, 0]} rotation={[-Math.PI / 2, Math.PI, 0]}>
+        <torusGeometry args={[0.06, 0.02, 8, 16, Math.PI]} />
+        <meshPhysicalMaterial color="#E52929" roughness={0.4} />
+      </mesh>
+
+      {/* Bolt ring around hub face */}
+      {Array.from({ length: 10 }).map((_, i) => {
+        const a = (i / 10) * Math.PI * 2;
+        return (
+          <mesh key={i} position={[Math.cos(a) * 0.36, -0.19, Math.sin(a) * 0.36]}>
+            <cylinderGeometry args={[0.012, 0.012, 0.016, 6]} />
+            <meshPhysicalMaterial {...BOLT_MAT} />
+          </mesh>
+        );
+      })}
+
+      {/* Hub rim attachment screws */}
+      {BLADE_ANGLES.map((a) => {
+        const aRad = (a * Math.PI) / 180;
+        return (
+          <group key={`hub-screw-${a}`} position={[Math.sin(aRad) * 0.46, -0.04, -Math.cos(aRad) * 0.46]}>
+            <mesh>
+              <cylinderGeometry args={[0.016, 0.016, 0.018, 6]} />
+              <meshPhysicalMaterial {...SCREW_MAT} />
+            </mesh>
+          </group>
+        );
+      })}
     </group>
   );
 }
 
-/**
- * Mounting rod / drop rod from ceiling
- */
+/** Drop rod with ceiling canopy and collar */
 function MountingRod() {
   return (
     <group>
-      <mesh position={[0, 1.6, 0]} castShadow>
-        <cylinderGeometry args={[0.07, 0.07, 2.8, 16]} />
-        <meshStandardMaterial color="#777f8c" metalness={0.9} roughness={0.15} />
+      <mesh position={[0, 1.2, 0]} castShadow>
+        <cylinderGeometry args={[0.055, 0.055, 2.0, 16]} />
+        <meshPhysicalMaterial {...ROD_MAT} />
       </mesh>
-      {/* Ceiling mount plate */}
-      <mesh position={[0, 3.05, 0]}>
-        <cylinderGeometry args={[0.35, 0.35, 0.12, 24]} />
-        <meshStandardMaterial color="#888fa0" metalness={0.85} roughness={0.15} />
+      <mesh position={[0, 2.25, 0]}>
+        <cylinderGeometry args={[0.28, 0.22, 0.10, 24]} />
+        <meshPhysicalMaterial {...HUB_MAT} />
+      </mesh>
+      <mesh position={[0, 0.17, 0]}>
+        <cylinderGeometry args={[0.08, 0.08, 0.07, 16]} />
+        <meshPhysicalMaterial {...ROD_MAT} />
       </mesh>
     </group>
   );
 }
 
-/**
- * The complete fan assembly — hub + 5 blades + rod
- */
-function FanAssembly() {
-  const groupRef = useRef();
+/** Full fan assembly with speed-controlled rotation */
+function FanAssembly({ autoRotate = true, speed }) {
+  const bladeGroupRef = useRef();
+  const smoothSpeed = useRef(speed ?? 90);
 
-  // Slow, smooth rotation on the Y axis
-  useFrame((state, delta) => {
-    if (groupRef.current) {
-      groupRef.current.rotation.y -= delta * 0.4; // slow HVLS speed
+  // Map RPM to visual rotation rate — ~40% of real physics speed
+  // Real: rpm * (2π/60) ≈ rpm * 0.1047. Visual: rpm * 0.04
+  // 55 RPM → 2.2 rad/s (~1 rotation/2.9s), 125 RPM → 5.0 rad/s (~1 rotation/1.3s)
+  const toRate = (rpm) => rpm * 0.04;
+
+  useFrame((_, delta) => {
+    if (!bladeGroupRef.current || !autoRotate) return;
+
+    if (speed != null) {
+      // Smooth interpolation toward target speed
+      smoothSpeed.current = THREE.MathUtils.lerp(
+        smoothSpeed.current,
+        speed,
+        1 - Math.pow(0.01, delta),
+      );
+      bladeGroupRef.current.rotation.y -= delta * toRate(smoothSpeed.current);
+    } else {
+      bladeGroupRef.current.rotation.y -= delta * 0.3;
     }
   });
-
-  // 5 blades evenly distributed: 0, 72, 144, 216, 288 degrees
-  const bladeAngles = [0, 72, 144, 216, 288];
 
   return (
     <group>
       <MountingRod />
-      {/* Rotating part: hub + blades */}
-      <group ref={groupRef}>
+      <group ref={bladeGroupRef}>
         <Hub />
-        {bladeAngles.map((angle) => (
-          <Blade key={angle} angle={angle} />
+        {BLADE_ANGLES.map((a) => (
+          <Blade key={a} angle={a} />
+        ))}
+        {BLADE_ANGLES.map((a) => (
+          <MountingBracket key={`b${a}`} angle={a} />
         ))}
       </group>
     </group>
   );
 }
 
-/**
- * Main exported 3D canvas component
- */
-export default function HVLSFan3D() {
+export default function HVLSFan3D({ mode = 'hero', speed }) {
+  const isProduct = mode === 'product';
+
   return (
-    <Canvas
-      shadows
-      camera={{ position: [6, 3, 6], fov: 42, near: 0.1, far: 100 }}
-      gl={{ antialias: true, toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1.2 }}
-      style={{ width: '100%', height: '100%' }}
+    <div
+      role="img"
+      aria-label="3D rendered SpyroFans HVLS industrial ceiling fan"
+      style={{ width: '100%', height: '100%', cursor: isProduct ? 'grab' : 'default' }}
     >
-      {/* Lighting */}
-      <ambientLight intensity={0.4} />
-      <directionalLight
-        position={[8, 10, 5]}
-        intensity={2.5}
-        castShadow
-        shadow-mapSize={[2048, 2048]}
-      />
-      <directionalLight position={[-5, 4, -3]} intensity={0.8} color="#007BC9" />
-      <pointLight position={[0, -2, 0]} intensity={0.5} color="#E52929" />
-
-      {/* Environment for reflections */}
-      <Suspense fallback={null}>
-        <Environment preset="city" />
-      </Suspense>
-
-      {/* Floating animation wrapper */}
-      <Float
-        speed={1.2}
-        rotationIntensity={0.05}
-        floatIntensity={0.3}
-        floatingRange={[-0.05, 0.05]}
+      <Canvas
+        shadows
+        camera={{
+          position: isProduct ? [5, -1.5, 5] : [5, -2, 5],
+          fov: isProduct ? 38 : 42,
+          near: 0.1,
+          far: 100,
+        }}
+        gl={{
+          antialias: true,
+          toneMapping: THREE.ACESFilmicToneMapping,
+          toneMappingExposure: 1.3,
+          alpha: true,
+        }}
+        style={{ background: 'transparent' }}
       >
-        <FanAssembly />
-      </Float>
+        <ambientLight intensity={0.45} />
+        <directionalLight
+          position={[8, 10, 5]}
+          intensity={2.0}
+          castShadow
+          shadow-mapSize={[1024, 1024]}
+        />
+        <directionalLight position={[-5, -4, -3]} intensity={0.6} />
+        <directionalLight position={[0, -8, 2]} intensity={0.7} />
+        <directionalLight position={[-3, 2, -7]} intensity={0.4} />
 
-      {/* Ground shadow */}
-      <ContactShadows
-        position={[0, -3.5, 0]}
-        opacity={0.4}
-        scale={12}
-        blur={2.5}
-        far={6}
-        color="#000000"
-      />
-    </Canvas>
+        <Suspense fallback={null}>
+          <Environment preset="city" />
+        </Suspense>
+
+        {isProduct ? (
+          <>
+            <OrbitControls
+              enablePan={false}
+              enableZoom={false}
+              minPolarAngle={Math.PI * 0.55}
+              maxPolarAngle={Math.PI * 0.65}
+              autoRotate
+              autoRotateSpeed={0.4}
+            />
+            <group scale={0.75}>
+              <FanAssembly autoRotate speed={speed} />
+            </group>
+          </>
+        ) : (
+          <Float
+            speed={0.8}
+            rotationIntensity={0.02}
+            floatIntensity={0.1}
+            floatingRange={[-0.02, 0.02]}
+          >
+            <group scale={0.8}>
+              <FanAssembly autoRotate speed={speed} />
+            </group>
+          </Float>
+        )}
+      </Canvas>
+    </div>
   );
 }

@@ -1,18 +1,18 @@
-import { lazy, Suspense, useState, useCallback } from 'react';
+import { useState, lazy, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
 import { Check, ChevronDown, ChevronUp } from 'lucide-react';
-import SpeedControlSlider from '../components/SpeedControlSlider';
 
-// Lazy-load the heavy interactive 3D fan
-const InteractiveFan3D = lazy(() => import('../components/InteractiveFan3D'));
+const FloorFan3D = lazy(() => import('../components/FloorFan3D'));
+const HVLSFan3D  = lazy(() => import('../components/HVLSFan3D'));
+const SpeedControlSlider = lazy(() => import('../components/SpeedControlSlider'));
 
 // ─── Product data ──────────────────────────────────────────────────────────
 
 const products = [
   {
     id: 'roof',
-    imageRight: false, // image/3D on LEFT
+    imageRight: false,
     tag: 'Bestseller',
     tagColor: '#E52929',
     title: 'Roof Mounted HVLS Fan',
@@ -27,11 +27,13 @@ const products = [
       'Integrated variable-speed controller included',
     ],
     sizes: ['8 ft', '10 ft', '12 ft', '16 ft', '20 ft', '24 ft'],
-    is3D: true, // show interactive 3D model
+    image: '/images/fan_roof.png',
+    is3D: true,
+    fanType: 'hvls',
   },
   {
     id: 'floor',
-    imageRight: true,  // image on RIGHT
+    imageRight: true,
     tag: 'Portable',
     tagColor: '#007BC9',
     title: 'Floor Mounted HVLS Fan',
@@ -47,11 +49,12 @@ const products = [
     ],
     sizes: ['3 ft', '4 ft', '5 ft', '6 ft'],
     image: '/images/Floor_fan.png',
-    is3D: false,
+    is3D: true,
+    fanType: 'floor',
   },
   {
     id: 'pole',
-    imageRight: false, // image on LEFT
+    imageRight: false,
     tag: 'Outdoor Ready',
     tagColor: '#E52929',
     title: 'Pole Mounted HVLS Fan',
@@ -71,96 +74,42 @@ const products = [
   },
 ];
 
-// ─── Interactive 3D panel (Roof fan) ──────────────────────────────────────
-
-function RoofFan3DPanel() {
-  const [speed, setSpeed] = useState(45);
-  const [isDragging, setIsDragging] = useState(false);
-
-  const handleDragChange = useCallback((v) => setIsDragging(v), []);
-
-  return (
-    <div className="flex flex-col gap-5">
-      {/* 3D Canvas */}
-      <div
-        className="rounded-3xl overflow-hidden relative"
-        style={{
-          background: 'linear-gradient(135deg, #0D1520 0%, #0A0F18 50%, #0D0A10 100%)',
-          border: '1px solid rgba(0,123,201,0.15)',
-          boxShadow: '0 0 60px rgba(0,123,201,0.08)',
-        }}
-      >
-        {/* Hint label */}
-        <div
-          className="absolute top-4 left-4 z-10 flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full"
-          style={{ background: 'rgba(0,0,0,0.5)', color: 'rgba(255,255,255,0.5)', backdropFilter: 'blur(8px)' }}
-        >
-          <span>Drag to rotate</span>
-        </div>
-
-        <Suspense
-          fallback={
-            <div className="flex items-center justify-center" style={{ height: 420 }}>
-              <div
-                className="w-10 h-10 rounded-full animate-spin"
-                style={{ border: '2px solid #007BC9', borderTopColor: '#E52929' }}
-              />
-            </div>
-          }
-        >
-          <InteractiveFan3D
-            speed={speed}
-            onDragChange={handleDragChange}
-            height="420px"
-          />
-        </Suspense>
-      </div>
-
-      {/* Speed control */}
-      <div
-        className="rounded-2xl px-6 py-5"
-        style={{
-          background: 'var(--bg-surface)',
-          border: '1px solid var(--border)',
-          boxShadow: 'var(--shadow)',
-        }}
-      >
-        <SpeedControlSlider
-          speed={speed}
-          onChange={setSpeed}
-          isDragging={isDragging}
-        />
-      </div>
-    </div>
-  );
-}
-
 // ─── Static image panel ────────────────────────────────────────────────────
 
 function ImagePanel({ src, alt }) {
+  const webpSrc = src.replace(/\.png$/i, '.webp');
+
   return (
     <div
       className="rounded-3xl overflow-hidden flex items-center justify-center p-8 relative"
       style={{
         background: 'var(--bg-surface)',
         border: '1px solid var(--border)',
-        boxShadow: 'var(--shadow-lg)',
+        boxShadow: '0 4px 24px rgba(0, 0, 0, 0.06)',
         minHeight: 360,
       }}
     >
-      {/* Subtle radial glow behind image */}
       <div
-        className="absolute inset-0 opacity-30"
-        style={{ background: 'radial-gradient(ellipse at center, rgba(0,123,201,0.15) 0%, transparent 70%)' }}
+        className="absolute inset-0 opacity-30 pointer-events-none"
+        style={{
+          background: 'radial-gradient(ellipse at center, rgba(0,123,201,0.15) 0%, transparent 70%)',
+        }}
       />
-      <motion.img
-        src={src}
-        alt={alt}
-        className="relative w-full max-w-sm object-contain drop-shadow-2xl"
-        style={{ maxHeight: 340 }}
-        whileHover={{ scale: 1.04 }}
-        transition={{ duration: 0.4, ease: 'easeOut' }}
-      />
+      <picture>
+        <source srcSet={webpSrc} type="image/webp" />
+        <motion.img
+          src={src}
+          alt={alt}
+          loading="lazy"
+          decoding="async"
+          width={768}
+          height={573}
+          className="relative w-full max-w-sm object-contain drop-shadow-2xl"
+          style={{ maxHeight: 340 }}
+          whileHover={{ scale: 1.04 }}
+          transition={{ duration: 0.4, ease: 'easeOut' }}
+        />
+      </picture>
     </div>
   );
 }
@@ -169,6 +118,7 @@ function ImagePanel({ src, alt }) {
 
 function SizesRow({ sizes }) {
   const [selected, setSelected] = useState(sizes[0]);
+
   return (
     <div>
       <p
@@ -177,25 +127,87 @@ function SizesRow({ sizes }) {
       >
         Available Sizes
       </p>
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-2" role="radiogroup" aria-label="Fan sizes">
         {sizes.map((s) => (
           <button
             key={s}
             onClick={() => setSelected(s)}
+            role="radio"
+            aria-checked={selected === s}
             className="px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200 cursor-pointer"
             style={
               selected === s
                 ? { background: '#007BC9', color: '#fff', boxShadow: '0 0 16px rgba(0,123,201,0.35)' }
-                : {
-                    background: 'var(--bg-base)',
-                    color: 'var(--text-secondary)',
-                    border: '1px solid var(--border)',
-                  }
+                : { background: 'var(--bg-base)', color: 'var(--text-secondary)', border: '1px solid var(--border)' }
             }
           >
             {s}
           </button>
         ))}
+      </div>
+    </div>
+  );
+}
+
+// ─── 3D panel with speed slider ────────────────────────────────────────────
+
+function Fan3DPanel({ fanType }) {
+  const [speed, setSpeed] = useState(90);
+  const [isDragging, setIsDragging] = useState(false);
+
+  return (
+    <div className="flex flex-col gap-4">
+      {/* 3D fan container */}
+      <div
+        className="rounded-3xl overflow-hidden flex items-center justify-center relative"
+        style={{
+          background: 'var(--bg-surface)',
+          border: '1px solid var(--border)',
+          boxShadow: '0 4px 24px rgba(0, 0, 0, 0.06)',
+          minHeight: 360,
+          height: 420,
+        }}
+      >
+        <div
+          className="absolute inset-0 opacity-30 pointer-events-none"
+          style={{
+            background: 'radial-gradient(ellipse at center, rgba(0,123,201,0.15) 0%, transparent 70%)',
+          }}
+        />
+        <Suspense
+          fallback={
+            <div className="flex items-center justify-center w-full h-full">
+              <div
+                className="w-8 h-8 rounded-full animate-spin"
+                style={{ border: '2px solid var(--border)', borderTopColor: 'var(--accent-blue)' }}
+              />
+            </div>
+          }
+        >
+          {fanType === 'hvls' ? (
+            <HVLSFan3D mode="product" speed={speed} />
+          ) : (
+            <FloorFan3D speed={speed} />
+          )}
+        </Suspense>
+      </div>
+
+      {/* Speed control slider */}
+      <div
+        className="rounded-2xl px-6 py-5"
+        style={{
+          background: 'var(--bg-surface)',
+          border: '1px solid var(--border)',
+          boxShadow: '0 2px 12px rgba(0, 0, 0, 0.04)',
+        }}
+      >
+        <Suspense fallback={null}>
+          <SpeedControlSlider
+            speed={speed}
+            onChange={setSpeed}
+            isDragging={isDragging}
+          />
+        </Suspense>
       </div>
     </div>
   );
@@ -217,22 +229,28 @@ function ProductSection({ product, index }) {
       transition={{ duration: 0.7, ease: 'easeOut' }}
       className="py-16 lg:py-24 border-t"
       style={{ borderColor: 'var(--border)' }}
+      role="article"
+      aria-labelledby={`product-title-${product.id}`}
     >
       <div
-        className={`grid lg:grid-cols-2 gap-12 lg:gap-20 items-center ${
+        className={`grid lg:grid-cols-2 gap-12 lg:gap-20 items-start ${
           isImageRight ? 'lg:[&>*:first-child]:order-last' : ''
         }`}
       >
-        {/* ── Visual panel (3D or image) ── */}
-        <div>
+        {/* Visual panel */}
+        <motion.div
+          initial={{ clipPath: 'inset(0 100% 0 0)' }}
+          animate={isInView ? { clipPath: 'inset(0 0% 0 0)' } : {}}
+          transition={{ duration: 0.8, ease: [0.25, 1, 0.5, 1], delay: 0.2 }}
+        >
           {product.is3D ? (
-            <RoofFan3DPanel />
+            <Fan3DPanel fanType={product.fanType} />
           ) : (
             <ImagePanel src={product.image} alt={product.title} />
           )}
-        </div>
+        </motion.div>
 
-        {/* ── Details panel ── */}
+        {/* Details panel */}
         <div className="flex flex-col gap-7">
           {/* Tag + number */}
           <div className="flex items-center gap-3">
@@ -242,10 +260,7 @@ function ProductSection({ product, index }) {
             >
               {product.tag}
             </span>
-            <span
-              className="text-xs font-mono"
-              style={{ color: 'var(--text-muted)' }}
-            >
+            <span className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>
               0{index + 1}
             </span>
           </div>
@@ -254,54 +269,40 @@ function ProductSection({ product, index }) {
           <div>
             <p
               className="text-xs uppercase tracking-widest mb-1.5"
-              style={{ color: 'var(--text-muted)' }}
+              style={{ color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}
             >
               {product.subtitle}
             </p>
             <h3
+              id={`product-title-${product.id}`}
               className="text-3xl lg:text-4xl font-bold leading-tight"
-              style={{ color: 'var(--text-primary)' }}
+              style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-display)' }}
             >
               {product.title}
             </h3>
           </div>
 
           {/* Description */}
-          <p
-            className="text-base leading-relaxed"
-            style={{ color: 'var(--text-secondary)' }}
-          >
+          <p className="text-base leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
             {product.description}
           </p>
 
           {/* Bullet points — collapsible */}
-          <div
-            className="rounded-2xl overflow-hidden"
-            style={{ border: '1px solid var(--border)' }}
-          >
+          <div className="rounded-2xl overflow-hidden" style={{ border: '1px solid var(--border)' }}>
             <button
-              onClick={() => setBulletsOpen(!bulletsOpen)}
+              onClick={() => setBulletsOpen((prev) => !prev)}
+              aria-expanded={bulletsOpen}
               className="w-full flex items-center justify-between px-5 py-4 text-sm font-semibold cursor-pointer transition-colors"
-              style={{
-                color: 'var(--text-primary)',
-                background: 'var(--bg-surface)',
-              }}
+              style={{ color: 'var(--text-primary)', background: 'var(--bg-surface)' }}
             >
               Key Features
               {bulletsOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
             </button>
             {bulletsOpen && (
-              <ul
-                className="px-5 pb-4 flex flex-col gap-2.5"
-                style={{ background: 'var(--bg-base)' }}
-              >
+              <ul className="px-5 pb-4 flex flex-col gap-2.5" style={{ background: 'var(--bg-base)' }}>
                 {product.bullets.map((b) => (
                   <li key={b} className="flex items-start gap-3 text-sm">
-                    <Check
-                      size={14}
-                      className="mt-0.5 flex-shrink-0"
-                      style={{ color: '#007BC9' }}
-                    />
+                    <Check size={14} className="mt-0.5 flex-shrink-0" style={{ color: '#007BC9' }} aria-hidden="true" />
                     <span style={{ color: 'var(--text-secondary)' }}>{b}</span>
                   </li>
                 ))}
@@ -312,24 +313,17 @@ function ProductSection({ product, index }) {
           {/* Size selector */}
           <SizesRow sizes={product.sizes} />
 
-          {/* CTA */}
+          {/* CTA buttons */}
           <div className="flex flex-wrap gap-3 pt-2">
             <button
               className="px-7 py-3 rounded-full text-sm font-semibold text-white transition-all duration-300 hover:opacity-90 hover:scale-105 cursor-pointer"
-              style={{
-                background: 'linear-gradient(135deg, #E52929, #007BC9)',
-                boxShadow: '0 4px 20px rgba(229,41,41,0.25)',
-              }}
+              style={{ background: '#007BC9', boxShadow: '0 4px 20px rgba(0,123,201,0.3)' }}
             >
               Request Quote
             </button>
             <button
               className="px-7 py-3 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105 cursor-pointer"
-              style={{
-                background: 'var(--bg-surface)',
-                color: 'var(--text-primary)',
-                border: '1px solid var(--border)',
-              }}
+              style={{ background: 'var(--bg-surface)', color: 'var(--text-primary)', border: '1px solid var(--border)' }}
             >
               Download Spec Sheet
             </button>
@@ -340,46 +334,54 @@ function ProductSection({ product, index }) {
   );
 }
 
-// ─── Section header ────────────────────────────────────────────────────────
+// ─── Section wrapper ──────────────────────────────────────────────────────
 
 export default function Products() {
   const { ref, isInView } = useScrollAnimation();
 
   return (
-    <section id="products" className="relative py-16" style={{ background: 'var(--bg-base)' }}>
+    <section
+      id="products"
+      className="relative py-16"
+      style={{ background: 'var(--bg-base)' }}
+      aria-labelledby="products-heading"
+    >
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         {/* Header */}
         <motion.div
           ref={ref}
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          initial={{ opacity: 0, x: -40 }}
+          animate={isInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-4"
+          className="flex items-end gap-8 mb-4"
         >
-          <div
-            className="inline-flex items-center gap-2 rounded-full px-4 py-2 mb-6 glass"
-            style={{ border: '1px solid var(--border)' }}
-          >
-            <span
-              className="text-xs tracking-widest uppercase font-medium"
-              style={{ color: 'var(--text-muted)' }}
+          <div className="flex-shrink-0">
+            <div className="flex items-center gap-3 mb-4">
+              <div
+                className="w-8 h-0.5 rounded-full"
+                style={{ background: 'var(--accent-blue)' }}
+              />
+              <span
+                className="text-xs tracking-widest uppercase font-medium"
+                style={{ color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}
+              >
+                Product Range
+              </span>
+            </div>
+            <h2
+              id="products-heading"
+              className="text-4xl lg:text-5xl font-bold mb-4"
+              style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-display)' }}
             >
-              Product Range
-            </span>
+              The right fan for{' '}
+              <span style={{ color: 'var(--accent-blue)' }}>every space</span>
+            </h2>
+            <p className="text-lg max-w-xl" style={{ color: 'var(--text-secondary)' }}>
+              From massive warehouses to covered outdoor venues — SpyroFans has
+              a solution engineered for your exact application.
+            </p>
           </div>
-          <h2
-            className="text-4xl lg:text-5xl font-bold mb-4"
-            style={{ color: 'var(--text-primary)' }}
-          >
-            The right fan for{' '}
-            <span className="gradient-text">every space</span>
-          </h2>
-          <p
-            className="text-lg max-w-xl mx-auto"
-            style={{ color: 'var(--text-secondary)' }}
-          >
-            From massive warehouses to covered outdoor venues — SpyroFans has a solution engineered for your exact application.
-          </p>
+          <div className="hidden lg:block flex-grow h-px mb-4" style={{ background: 'var(--border)' }} />
         </motion.div>
 
         {/* Individual product sections */}
