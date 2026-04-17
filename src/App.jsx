@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react';
 import { ThemeProvider } from './context/ThemeContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import FloatingActions from './components/FloatingActions';
 import './index.css';
 
 const Hero          = lazy(() => import('./sections/Hero'));
@@ -37,6 +38,7 @@ function Site() {
       <Suspense fallback={<SectionLoader />}><Contact /></Suspense>
 
       <Footer />
+      <FloatingActions />
     </div>
   );
 }

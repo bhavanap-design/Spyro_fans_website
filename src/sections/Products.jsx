@@ -5,6 +5,7 @@ import { Check, ChevronDown, ChevronUp } from 'lucide-react';
 
 const FloorFan3D = lazy(() => import('../components/FloorFan3D'));
 const HVLSFan3D  = lazy(() => import('../components/HVLSFan3D'));
+const PoleFan3D  = lazy(() => import('../components/PoleFan3D'));
 const SpeedControlSlider = lazy(() => import('../components/SpeedControlSlider'));
 
 // ─── Product data ──────────────────────────────────────────────────────────
@@ -70,7 +71,8 @@ const products = [
     ],
     sizes: ['8 ft', '10 ft', '12 ft', '16 ft', '20 ft'],
     image: '/images/Pole_fan.png',
-    is3D: false,
+    is3D: true,
+    fanType: 'pole',
   },
 ];
 
@@ -186,6 +188,8 @@ function Fan3DPanel({ fanType }) {
         >
           {fanType === 'hvls' ? (
             <HVLSFan3D mode="product" speed={speed} />
+          ) : fanType === 'pole' ? (
+            <PoleFan3D speed={speed} />
           ) : (
             <FloorFan3D speed={speed} />
           )}
