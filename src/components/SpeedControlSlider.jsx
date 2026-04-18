@@ -86,6 +86,46 @@ export default function SpeedControlSlider({ speed, onChange, isDragging }) {
           ? 'Comfort cooling — recommended for occupied spaces'
           : 'High performance — maximum airflow output'}
       </p>
+
+      {/* Dynamic performance stats */}
+      <DerivedStats speed={speed} />
+    </div>
+  );
+}
+
+function DerivedStats({ speed }) {
+  const airflow = Math.round(speed * 50);
+  const torque  = (speed * 0.2).toFixed(1);
+  const energy  = (speed * 0.01).toFixed(1);
+
+  const stats = [
+    { label: 'Airflow',  value: airflow.toLocaleString(), unit: 'CFM',  color: '#007BC9' },
+    { label: 'Torque',   value: torque,                   unit: 'Nm',   color: '#E52929' },
+    { label: 'Energy',   value: energy,                   unit: 'kW',   color: '#007BC9' },
+  ];
+
+  return (
+    <div className="grid grid-cols-3 gap-2 mt-6">
+      {stats.map(({ label, value, unit, color }) => (
+        <div
+          key={label}
+          className="flex flex-col items-center rounded-xl py-3.5 px-1"
+          style={{ background: 'var(--bg-base)', border: '1px solid var(--border)' }}
+        >
+          <span
+            className="text-base font-bold tabular-nums leading-none"
+            style={{ color }}
+          >
+            {value}
+            <span className="text-[11px] font-normal ml-0.5" style={{ color: 'var(--text-muted)' }}>
+              {unit}
+            </span>
+          </span>
+          <span className="text-[10px] mt-1.5 uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>
+            {label}
+          </span>
+        </div>
+      ))}
     </div>
   );
 }

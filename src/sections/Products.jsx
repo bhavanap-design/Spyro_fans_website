@@ -318,7 +318,7 @@ function ProductSection({ product, index }) {
               {bulletsOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
             </button>
             {bulletsOpen && (
-              <ul className="px-5 pb-4 flex flex-col gap-2.5" style={{ background: 'var(--bg-base)' }}>
+              <ul className="px-5 pt-3 pb-4 flex flex-col gap-2.5" style={{ background: 'var(--bg-base)' }}>
                 {product.bullets.map((b) => (
                   <li key={b} className="flex items-start gap-3 text-sm">
                     <Check size={14} className="mt-0.5 flex-shrink-0" style={{ color: '#007BC9' }} aria-hidden="true" />
@@ -336,7 +336,7 @@ function ProductSection({ product, index }) {
           <div className="flex flex-wrap gap-3 pt-2">
             <button
               className="px-7 py-3 rounded-full text-sm font-semibold text-white transition-all duration-300 hover:opacity-90 hover:scale-105 cursor-pointer"
-              style={{ background: '#007BC9' }}
+              style={{ background: 'linear-gradient(135deg, #E52929, #007BC9)' }}
             >
               Request Quote
             </button>

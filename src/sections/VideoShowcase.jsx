@@ -99,7 +99,7 @@ export default function VideoShowcase() {
                 {/* Dark overlay */}
                 <div
                   className="absolute inset-0 transition-opacity duration-300 group-hover:opacity-60"
-                  style={{ background: 'rgba(0,0,0,0.35)', borderRadius: '20px' }}
+                  style={{ background: 'rgba(0,0,0,0.15)', borderRadius: '20px' }}
                 />
 
                 {/* Play button */}

@@ -4,9 +4,9 @@ import { useScrollAnimation } from '../hooks/useScrollAnimation';
 import { Phone, Mail, MapPin, ArrowRight, CheckCircle } from 'lucide-react';
 
 const contactDetails = [
-  { icon: Phone, label: 'Phone', value: '+91 98765 43210', href: 'tel:+919876543210' },
-  { icon: Mail,  label: 'Email', value: 'sales@spyrofans.com', href: 'mailto:sales@spyrofans.com' },
-  { icon: MapPin, label: 'Address', value: 'Mumbai, Maharashtra, India', href: '#' },
+  { icon: Phone, label: 'Phone', value: '+91 98765 43210', href: 'tel:+919949465932' },
+  { icon: Mail,  label: 'Email', value: 'info@spyrofan.com', href: 'mailto:info@spyrofan.com' },
+  { icon: MapPin, label: 'Address', value: '#6-2-982, 3rd Floor, GNR Arcade, Khairatabad, Hyderabad – 500 004', href: '#' },
 ];
 
 export default function Contact() {

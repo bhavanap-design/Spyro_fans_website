@@ -152,7 +152,7 @@ function GalleryCarousel({ onOpen, onActiveChange }) {
         const rotateY   = abs === 0 ? 0 : offset > 0 ? -10 : 10;
         const zIndex    = abs === 0 ? 30  : abs === 1 ? 20  : 10;
         const boxShadow = isCenter
-          ? '0 22px 44px rgba(0,0,0,0.20), 0 8px 20px rgba(0,0,0,0.10)'
+          ? 'none'
           : '0 8px 22px rgba(0,0,0,0.10)';
 
         return (
@@ -198,7 +198,7 @@ function GalleryCarousel({ onOpen, onActiveChange }) {
               <>
                 <div
                   className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300"
-                  style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 50%)' }}
+                  // style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 50%)' }}
                 />
                 <div className="absolute bottom-0 left-0 right-0 px-6 pb-5 opacity-0 hover:opacity-100 transition-opacity duration-300">
                   <p className="text-white font-semibold text-base">{img.label}</p>

@@ -200,7 +200,7 @@ function MarqueeColumn({ items, direction = 'up', duration = 30 }) {
 
 const stats = [
   { value: '2,400+', label: 'Installations' },
-  { value: '40+',    label: 'Countries' },
+  { value: '800+',    label: 'Clients' },
   { value: '98%',    label: 'Client retention' },
 ];
 

@@ -107,8 +107,8 @@ function VideoPlayer() {
 // ─── About section ───────────────────────────────────────────────────────────
 
 const stats = [
-  { value: '2001', label: 'Founded' },
-  { value: '40+',  label: 'Countries' },
+  { value: '2020', label: 'Founded' },
+  { value: '40+',  label: 'Engineers' },
   { value: '2,400+', label: 'Installations' },
 ];
 
@@ -151,7 +151,7 @@ export default function AboutUs() {
             </h2>
 
             <p className="text-base leading-relaxed mb-5" style={{ color: 'var(--text-secondary)' }}>
-              SpyroFans was born from a simple observation — most large spaces are thermally uncomfortable, and conventional fans can't solve the problem efficiently. Since 2001, we have been engineering HVLS fans that redefine what's possible in industrial comfort.
+              SpyroFans was born from a simple observation — most large spaces are thermally uncomfortable, and conventional fans can't solve the problem efficiently. Since 2020, we have been engineering HVLS fans that redefine what's possible in industrial comfort.
             </p>
 
             <p className="text-base leading-relaxed mb-8" style={{ color: 'var(--text-secondary)' }}>
