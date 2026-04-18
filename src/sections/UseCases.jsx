@@ -9,7 +9,7 @@ const cases = [
     id: 'warehouse',
     title: 'Warehouses',
     description: 'Keep workers comfortable across massive distribution centres while reducing stratification energy loss by up to 30%.',
-    image: '/images/Gallery 1.jpg',
+    image: '/Spyro_Application_Images/image 18.png',
     tag: 'Industrial',
   },
   {
@@ -30,7 +30,7 @@ const cases = [
     id: 'agriculture',
     title: 'Agricultural',
     description: 'Improve animal welfare and reduce mortality rates in livestock buildings with perfectly calibrated airflow.',
-    image: '/images/Gallery 5.jpg',
+    image: '/Spyro_Application_Images/image 19.png',
     tag: 'Agricultural',
   },
   {
@@ -44,7 +44,7 @@ const cases = [
     id: 'aviation',
     title: 'Aviation Hangars',
     description: 'Massive open-span structures with strict air quality requirements — HVLS is the only practical solution.',
-    image: '/images/Gallery 7.jpg',
+    image: '/Spyro_Application_Images/fan_side_angle.png',
     tag: 'Aviation',
   },
 ];

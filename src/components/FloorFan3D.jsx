@@ -15,7 +15,7 @@ const FRAME_MAT = {
 };
 
 const BLADE_MAT = {
-  color: '#D4440A',
+  color: '#E52929',
   metalness: 0.2,
   roughness: 0.35,
   clearcoat: 0.2,

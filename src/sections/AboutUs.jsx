@@ -37,7 +37,7 @@ function VideoPlayer() {
       className="relative rounded-3xl overflow-hidden group"
       style={{
         background: '#0A0A0F',
-        border: '1px solid rgba(0,123,201,0.20)',
+        border: '1px solid #007BC9',
         boxShadow: '0 24px 60px rgba(0,0,0,0.25)',
         aspectRatio: '16/9',
       }}
@@ -123,7 +123,7 @@ export default function AboutUs() {
     >
       {/* Accent glow */}
       <div className="absolute left-0 top-1/2 -translate-y-1/2 w-96 h-96 rounded-full blur-3xl opacity-[0.07] pointer-events-none"
-        style={{ background: 'radial-gradient(circle, #E52929, transparent)' }} />
+        style={{ background: '#E52929' }} />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
@@ -172,12 +172,12 @@ export default function AboutUs() {
               ))}
             </div>
 
-            <button
+            {/* <button
               className="font-semibold px-7 py-3.5 rounded-full text-sm text-white transition-all duration-300 hover:opacity-90 hover:scale-105 cursor-pointer"
-              style={{ background: 'linear-gradient(135deg, #E52929, #007BC9)', boxShadow: '0 6px 24px rgba(229,41,41,0.25)' }}
+              style={{ background: 'linear-gradient(135deg, #E52929, #007BC9)' }}
             >
               Our Story →
-            </button>
+            </button> */}
           </motion.div>
 
           {/* RIGHT: video */}

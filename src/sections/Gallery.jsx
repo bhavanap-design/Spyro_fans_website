@@ -280,7 +280,7 @@ export default function Gallery() {
     <section id="gallery" className="relative py-28 overflow-hidden" style={{ background: 'var(--bg-base)' }}>
       {/* Top separator */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-px"
-        style={{ background: 'linear-gradient(90deg, transparent, rgba(0,123,201,0.4), rgba(229,41,41,0.4), transparent)' }} />
+        style={{ background: 'linear-gradient(90deg, transparent, #007BC9, #E52929, transparent)' }} />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
 
@@ -333,9 +333,9 @@ export default function Gallery() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2.5 text-sm font-semibold px-7 py-3 rounded-full transition-all duration-300 hover:opacity-90 hover:scale-105"
             style={{
-              background: 'linear-gradient(135deg, #E52929, #C1006A, #007BC9)',
+              background: 'linear-gradient(135deg, #E52929, #007BC9)',
               color: 'white',
-              boxShadow: '0 4px 20px rgba(229,41,41,0.25)',
+              boxShadow: 'none',
             }}
           >
             <InstagramIcon />

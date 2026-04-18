@@ -22,8 +22,7 @@ const icons = {
   ),
   maintenance: (color) => (
     <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-      <polyline points="9 12 11 14 15 10" />
+      <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
     </svg>
   ),
 };
@@ -35,9 +34,9 @@ const features = [
     description: 'Consumes up to 56% less energy than conventional HVAC systems by leveraging large-diameter, slow-speed airflow across enormous areas.',
     color: '#E52929',
     metric: '56% less energy',
-    gradient: 'radial-gradient(ellipse at top left, rgba(229,41,41,0.07) 0%, transparent 65%)',
-    hoverShadow: '0 16px 40px rgba(229,41,41,0.14)',
-    hoverBorder: 'rgba(229,41,41,0.25)',
+    gradient: 'none',
+    hoverShadow: '0 16px 40px rgba(0,0,0,0.12)',
+    hoverBorder: '#E52929',
   },
   {
     key: 'wind',
@@ -45,9 +44,9 @@ const features = [
     description: 'A single HVLS fan effectively circulates air across up to 2,000 m² — replacing dozens of smaller high-speed fans.',
     color: '#007BC9',
     metric: 'Up to 2,000 m²',
-    gradient: 'radial-gradient(ellipse at top left, rgba(0,123,201,0.07) 0%, transparent 65%)',
-    hoverShadow: '0 16px 40px rgba(0,123,201,0.14)',
-    hoverBorder: 'rgba(0,123,201,0.25)',
+    gradient: 'none',
+    hoverShadow: '0 16px 40px rgba(0,0,0,0.12)',
+    hoverBorder: '#007BC9',
   },
   {
     key: 'silent',
@@ -55,19 +54,19 @@ const features = [
     description: 'Ultra-low RPM means whisper-quiet performance, even in sensitive environments like offices, showrooms, and livestock facilities.',
     color: '#E52929',
     metric: '< 45 dB',
-    gradient: 'radial-gradient(ellipse at top left, rgba(229,41,41,0.07) 0%, transparent 65%)',
-    hoverShadow: '0 16px 40px rgba(229,41,41,0.14)',
-    hoverBorder: 'rgba(229,41,41,0.25)',
+    gradient: 'none',
+    hoverShadow: '0 16px 40px rgba(0,0,0,0.12)',
+    hoverBorder: '#E52929',
   },
   {
     key: 'maintenance',
     title: 'Zero Maintenance',
-    description: 'Our gearless direct drive motor completely eliminates the gearbox — eliminating wear and tear for decades of maintenance-free operation.',
+    description: 'Our gearless direct drive motor completely eliminates gearbox which eliminates wear and tear and therefore zero maintenance.',
     color: '#007BC9',
-    metric: '10-Year Warranty',
-    gradient: 'radial-gradient(ellipse at top left, rgba(0,123,201,0.07) 0%, transparent 65%)',
-    hoverShadow: '0 16px 40px rgba(0,123,201,0.14)',
-    hoverBorder: 'rgba(0,123,201,0.25)',
+    metric: 'Gearless Direct Drive',
+    gradient: 'none',
+    hoverShadow: '0 16px 40px rgba(0,0,0,0.12)',
+    hoverBorder: '#007BC9',
   },
 ];
 
@@ -112,8 +111,8 @@ function FeatureCard({ feature, index }) {
       <div
         className="relative w-14 h-14 rounded-2xl flex items-center justify-center mb-7 transition-transform duration-300 group-hover:scale-110"
         style={{
-          background: `${feature.color}12`,
-          border: `1.5px solid ${feature.color}22`,
+          background: 'var(--bg-base)',
+          border: `1.5px solid ${feature.color}`,
         }}
       >
         {icons[feature.key](feature.color)}
@@ -123,9 +122,8 @@ function FeatureCard({ feature, index }) {
       <div
         className="relative inline-flex items-center text-xs font-semibold px-3 py-1 rounded-full mb-4 w-fit"
         style={{
-          background: `${feature.color}12`,
-          color: feature.color,
-          border: `1px solid ${feature.color}20`,
+          background: feature.color,
+          color: '#fff',
           letterSpacing: '0.03em',
         }}
       >

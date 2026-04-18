@@ -11,6 +11,7 @@ const Products      = lazy(() => import('./sections/Products'));
 const WhyUs         = lazy(() => import('./sections/WhyUs'));
 const AboutUs       = lazy(() => import('./sections/AboutUs'));
 const Gallery       = lazy(() => import('./sections/Gallery'));
+const VideoShowcase = lazy(() => import('./sections/VideoShowcase'));
 const UseCases      = lazy(() => import('./sections/UseCases'));
 const Contact       = lazy(() => import('./sections/Contact'));
 
@@ -34,6 +35,7 @@ function Site() {
       <Suspense fallback={<SectionLoader />}><WhyUs /></Suspense>
       <Suspense fallback={<SectionLoader />}><AboutUs /></Suspense>
       <Suspense fallback={<SectionLoader />}><Gallery /></Suspense>
+      <Suspense fallback={<SectionLoader />}><VideoShowcase /></Suspense>
       <Suspense fallback={<SectionLoader />}><UseCases /></Suspense>
       <Suspense fallback={<SectionLoader />}><Contact /></Suspense>
 

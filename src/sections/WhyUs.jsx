@@ -211,7 +211,7 @@ export default function WhyUs() {
     <section id="why-choose-us" className="relative py-28" style={{ background: 'var(--bg-base)' }}>
       {/* Ambient glow */}
       <div className="absolute left-0 top-1/2 -translate-y-1/2 w-80 h-80 rounded-full blur-3xl opacity-[0.07] pointer-events-none"
-        style={{ background: 'radial-gradient(circle, #E52929, transparent)' }} />
+        style={{ background: '#E52929' }} />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <div className="grid lg:grid-cols-2 gap-16 items-start">

@@ -23,41 +23,38 @@ function AirflowSVG() {
 
       {/* Outer loops */}
       <path d="M 400 95 Q 220 100 140 200 Q 80 290 130 370 Q 180 420 280 400 Q 360 385 400 340"
-        stroke="#007BC9" strokeWidth="2" strokeDasharray="12 8" strokeLinecap="round" fill="none" opacity="0.7">
+        stroke="#007BC9" strokeWidth="2" strokeDasharray="12 8" strokeLinecap="round" fill="none">
         <animate attributeName="stroke-dashoffset" from="0" to="-100" dur="3s" repeatCount="indefinite"/>
       </path>
       <path d="M 400 95 Q 580 100 660 200 Q 720 290 670 370 Q 620 420 520 400 Q 440 385 400 340"
-        stroke="#007BC9" strokeWidth="2" strokeDasharray="12 8" strokeLinecap="round" fill="none" opacity="0.7">
+        stroke="#007BC9" strokeWidth="2" strokeDasharray="12 8" strokeLinecap="round" fill="none">
         <animate attributeName="stroke-dashoffset" from="0" to="-100" dur="3s" repeatCount="indefinite"/>
       </path>
 
       {/* Inner loops */}
       <path d="M 400 120 Q 290 130 230 210 Q 180 285 220 350 Q 260 390 330 370 Q 380 355 400 310"
-        stroke="#007BC9" strokeWidth="1.5" strokeDasharray="8 6" strokeLinecap="round" fill="none" opacity="0.5">
+        stroke="#007BC9" strokeWidth="1.5" strokeDasharray="8 6" strokeLinecap="round" fill="none">
         <animate attributeName="stroke-dashoffset" from="0" to="-70" dur="2.4s" repeatCount="indefinite"/>
       </path>
       <path d="M 400 120 Q 510 130 570 210 Q 620 285 580 350 Q 540 390 470 370 Q 420 355 400 310"
-        stroke="#007BC9" strokeWidth="1.5" strokeDasharray="8 6" strokeLinecap="round" fill="none" opacity="0.5">
+        stroke="#007BC9" strokeWidth="1.5" strokeDasharray="8 6" strokeLinecap="round" fill="none">
         <animate attributeName="stroke-dashoffset" from="0" to="-70" dur="2.4s" repeatCount="indefinite"/>
       </path>
 
       {/* Center column */}
-      <path d="M 400 95 L 400 340" stroke="url(#colGrad)" strokeWidth="2" strokeDasharray="6 5" strokeLinecap="round" opacity="0.6">
+      <path d="M 400 95 L 400 340" stroke="url(#colGrad)" strokeWidth="2" strokeDasharray="6 5" strokeLinecap="round">
         <animate attributeName="stroke-dashoffset" from="0" to="22" dur="1.2s" repeatCount="indefinite"/>
       </path>
 
       {/* Floor spread */}
-      <path d="M 400 370 Q 310 375 230 368" stroke="#007BC9" strokeWidth="1.5" strokeDasharray="6 5" strokeLinecap="round" opacity="0.5">
+      <path d="M 400 370 Q 310 375 230 368" stroke="#007BC9" strokeWidth="1.5" strokeDasharray="6 5" strokeLinecap="round">
         <animate attributeName="stroke-dashoffset" from="0" to="-40" dur="1.8s" repeatCount="indefinite"/>
       </path>
-      <polygon points="225,363 220,368 225,373" fill="#007BC9" opacity="0.6"/>
-      <path d="M 400 370 Q 490 375 570 368" stroke="#007BC9" strokeWidth="1.5" strokeDasharray="6 5" strokeLinecap="round" opacity="0.5">
+      <polygon points="225,363 220,368 225,373" fill="#007BC9"/>
+      <path d="M 400 370 Q 490 375 570 368" stroke="#007BC9" strokeWidth="1.5" strokeDasharray="6 5" strokeLinecap="round">
         <animate attributeName="stroke-dashoffset" from="0" to="-40" dur="1.8s" repeatCount="indefinite"/>
       </path>
-      <polygon points="575,363 580,368 575,373" fill="#007BC9" opacity="0.6"/>
-
-      <ellipse cx="250" cy="385" rx="80" ry="8" fill="#007BC9" opacity="0.06"/>
-      <ellipse cx="550" cy="385" rx="80" ry="8" fill="#007BC9" opacity="0.06"/>
+      <polygon points="575,363 580,368 575,373" fill="#007BC9"/>
 
       <text x="102" y="225" fill="rgba(128,128,128,0.5)" fontSize="11" fontFamily="Inter,sans-serif">Circulation</text>
       <text x="102" y="240" fill="rgba(128,128,128,0.5)" fontSize="11" fontFamily="Inter,sans-serif">Zone</text>
@@ -68,7 +65,7 @@ function AirflowSVG() {
       <defs>
         <linearGradient id="colGrad" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor="#007BC9"/>
-          <stop offset="100%" stopColor="#E52929" stopOpacity="0.3"/>
+          <stop offset="100%" stopColor="#E52929" stopOpacity="1"/>
         </linearGradient>
       </defs>
     </svg>
@@ -85,7 +82,7 @@ export default function AirflowVisual() {
       style={{ background: 'var(--bg-base)' }}
     >
       {/* Subtle separator */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-px" style={{ background: 'linear-gradient(90deg, transparent, rgba(229,41,41,0.3), rgba(0,123,201,0.3), transparent)' }}/>
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-px" style={{ background: 'linear-gradient(90deg, transparent, #E52929, #007BC9, transparent)' }}/>
 
       <div className="relative max-w-7xl mx-auto px-6 lg:px-12">
         <div className="grid lg:grid-cols-2 gap-16 items-center">

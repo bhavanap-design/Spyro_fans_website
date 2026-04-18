@@ -12,9 +12,9 @@ const fadeUp = {
 };
 
 const STATS = [
-  { value: '24ft', label: 'Blade Diameter' },
+  { value: '5 - 24ft', label: 'Blade Diameter' },
   { value: '~56%', label: 'Energy Savings' },
-  { value: '10yr', label: 'Warranty' },
+  { value: '3yr', label: 'Warranty' },
 ];
 
 export default function Hero() {
@@ -42,8 +42,7 @@ export default function Hero() {
       <div
         className="absolute inset-0 z-0 pointer-events-none"
         style={{
-          background:
-            'radial-gradient(ellipse 80% 60% at 70% 40%, rgba(0,123,201,0.08) 0%, transparent 60%), radial-gradient(ellipse 50% 50% at 20% 80%, rgba(229,41,41,0.04) 0%, transparent 60%)',
+          background: 'none',
         }}
       />
       {/* Subtle grid pattern overlay */}
@@ -67,14 +66,14 @@ export default function Hero() {
               style={{
                 background: 'var(--bg-surface)',
                 border: '1px solid var(--border)',
-                boxShadow: '0 0 20px rgba(0,123,201,0.08)',
+                boxShadow: 'none',
               }}
             >
               <span
                 className="w-2 h-2 rounded-full animate-pulse"
                 style={{
                   background: 'var(--accent-blue)',
-                  boxShadow: '0 0 8px rgba(0,123,201,0.5)',
+                  boxShadow: '0 0 8px #007BC9',
                 }}
               />
               <span
@@ -100,7 +99,7 @@ export default function Hero() {
               Industrial{' '}
               <span
                 style={{
-                  background: 'linear-gradient(135deg, #007BC9 0%, #00A3E0 100%)',
+                  background: 'linear-gradient(135deg, #E52929 0%, #007BC9 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                   backgroundClip: 'text',
@@ -146,8 +145,8 @@ export default function Hero() {
                 onClick={scrollToProducts}
                 className="text-white font-semibold px-8 py-4 rounded-full text-sm tracking-wide transition-all duration-300 hover:brightness-110 hover:scale-[1.03] hover:shadow-lg cursor-pointer"
                 style={{
-                  background: 'linear-gradient(135deg, #007BC9 0%, #0091E0 100%)',
-                  boxShadow: '0 4px 24px rgba(0,123,201,0.35)',
+                  background: 'linear-gradient(135deg, #E52929 0%, #007BC9 100%)',
+                  boxShadow: 'none',
                 }}
               >
                 Explore Products
@@ -203,7 +202,7 @@ export default function Hero() {
               <div
                 className="absolute inset-0 pointer-events-none rounded-3xl"
                 style={{
-                  background: 'radial-gradient(circle at 50% 50%, rgba(0,123,201,0.08) 0%, transparent 65%)',
+                  background: 'none',
                 }}
               />
               {/* Subtle ring decoration */}

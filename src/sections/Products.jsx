@@ -8,6 +8,18 @@ const HVLSFan3D  = lazy(() => import('../components/HVLSFan3D'));
 const PoleFan3D  = lazy(() => import('../components/PoleFan3D'));
 const SpeedControlSlider = lazy(() => import('../components/SpeedControlSlider'));
 
+// ─── PDF helper ────────────────────────────────────────────────────────────
+
+const handleDownloadAndOpen = (filePath) => {
+  window.open(filePath, '_blank');
+  const link = document.createElement('a');
+  link.href = filePath;
+  link.setAttribute('download', '');
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
+
 // ─── Product data ──────────────────────────────────────────────────────────
 
 const products = [
@@ -27,10 +39,11 @@ const products = [
       'IP55 motor rated for dusty, humid environments',
       'Integrated variable-speed controller included',
     ],
-    sizes: ['8 ft', '10 ft', '12 ft', '16 ft', '20 ft', '24 ft'],
+    sizes: ['8 ft', '10 ft', '12 ft', '14 ft', '16 ft', '18 ft', '20 ft', '24 ft'],
     image: '/images/fan_roof.png',
     is3D: true,
     fanType: 'hvls',
+    specPdf: '/Spyro_fans_Pdfs/Roof_Fans_specs.pdf',
   },
   {
     id: 'floor',
@@ -48,10 +61,11 @@ const products = [
       'Single-phase 230V supply — plug and go',
       'Protective blade guard cage included',
     ],
-    sizes: ['3 ft', '4 ft', '5 ft', '6 ft'],
+    sizes: ['4 ft', '5 ft'],
     image: '/images/Floor_fan.png',
     is3D: true,
     fanType: 'floor',
+    specPdf: '/Spyro_fans_Pdfs/Floor_Fans_specs.pdf',
   },
   {
     id: 'pole',
@@ -69,10 +83,11 @@ const products = [
       'Remote speed control with 10-preset memory',
       'Available with anti-condensation motor heater option',
     ],
-    sizes: ['8 ft', '10 ft', '12 ft', '16 ft', '20 ft'],
+    sizes: ['8 ft', '10 ft', '12 ft', '14 ft', '16 ft'],
     image: '/images/Pole_fan.png',
     is3D: true,
     fanType: 'pole',
+    specPdf: '/Spyro_fans_Pdfs/Pole_Fans_specs.pdf',
   },
 ];
 
@@ -94,7 +109,7 @@ function ImagePanel({ src, alt }) {
       <div
         className="absolute inset-0 opacity-30 pointer-events-none"
         style={{
-          background: 'radial-gradient(ellipse at center, rgba(0,123,201,0.15) 0%, transparent 70%)',
+          background: 'none',
         }}
       />
       <picture>
@@ -139,7 +154,7 @@ function SizesRow({ sizes }) {
             className="px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200 cursor-pointer"
             style={
               selected === s
-                ? { background: '#007BC9', color: '#fff', boxShadow: '0 0 16px rgba(0,123,201,0.35)' }
+                ? { background: '#007BC9', color: '#fff' }
                 : { background: 'var(--bg-base)', color: 'var(--text-secondary)', border: '1px solid var(--border)' }
             }
           >
@@ -173,7 +188,7 @@ function Fan3DPanel({ fanType }) {
         <div
           className="absolute inset-0 opacity-30 pointer-events-none"
           style={{
-            background: 'radial-gradient(ellipse at center, rgba(0,123,201,0.15) 0%, transparent 70%)',
+            background: 'none',
           }}
         />
         <Suspense
@@ -260,7 +275,7 @@ function ProductSection({ product, index }) {
           <div className="flex items-center gap-3">
             <span
               className="text-xs font-semibold px-3 py-1 rounded-full"
-              style={{ background: `${product.tagColor}18`, color: product.tagColor }}
+              style={{ background: product.tagColor, color: '#fff' }}
             >
               {product.tag}
             </span>
@@ -321,11 +336,12 @@ function ProductSection({ product, index }) {
           <div className="flex flex-wrap gap-3 pt-2">
             <button
               className="px-7 py-3 rounded-full text-sm font-semibold text-white transition-all duration-300 hover:opacity-90 hover:scale-105 cursor-pointer"
-              style={{ background: '#007BC9', boxShadow: '0 4px 20px rgba(0,123,201,0.3)' }}
+              style={{ background: '#007BC9' }}
             >
               Request Quote
             </button>
             <button
+              onClick={() => handleDownloadAndOpen(product.specPdf)}
               className="px-7 py-3 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105 cursor-pointer"
               style={{ background: 'var(--bg-surface)', color: 'var(--text-primary)', border: '1px solid var(--border)' }}
             >

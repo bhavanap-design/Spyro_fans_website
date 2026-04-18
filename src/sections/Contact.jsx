@@ -35,7 +35,7 @@ export default function Contact() {
       className="relative py-28"
       style={{ background: 'var(--bg-base)' }}
     >
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-px" style={{ background: 'linear-gradient(90deg, transparent, rgba(229,41,41,0.4), rgba(0,123,201,0.4), transparent)' }}/>
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-px" style={{ background: 'linear-gradient(90deg, transparent, #E52929, #007BC9, transparent)' }}/>
 
       <div className="relative max-w-7xl mx-auto px-6 lg:px-12">
         <motion.div
@@ -76,7 +76,7 @@ export default function Contact() {
                 >
                   <div
                     className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
-                    style={{ background: 'linear-gradient(135deg, rgba(229,41,41,0.1), rgba(0,123,201,0.1))', border: '1px solid var(--border)' }}
+                    style={{ background: 'var(--bg-base)', border: '1px solid var(--border)' }}
                   >
                     <Icon size={18} style={{ color: 'var(--text-secondary)' }} />
                   </div>
@@ -169,7 +169,7 @@ export default function Contact() {
                 <button
                   type="submit"
                   className="w-full text-white font-semibold py-4 rounded-xl text-sm tracking-wide transition-all duration-300 hover:opacity-90 hover:scale-[1.01] cursor-pointer"
-                  style={{ background: 'linear-gradient(135deg, #E52929, #007BC9)', boxShadow: '0 6px 24px rgba(0,123,201,0.25)' }}
+                  style={{ background: 'linear-gradient(135deg, #E52929, #007BC9)' }}
                 >
                   Send Enquiry →
                 </button>
