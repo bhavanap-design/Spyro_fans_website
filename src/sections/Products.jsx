@@ -1,4 +1,5 @@
 import { useState, lazy, Suspense } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
 import { Check, ChevronDown, ChevronUp } from 'lucide-react';
@@ -44,6 +45,7 @@ const products = [
     is3D: true,
     fanType: 'hvls',
     specPdf: '/Spyro_fans_Pdfs/Roof_Fans_specs.pdf',
+    detailRoute: '/products/roof-mounted-hvls-fan',
   },
   {
     id: 'floor',
@@ -66,6 +68,7 @@ const products = [
     is3D: true,
     fanType: 'floor',
     specPdf: '/Spyro_fans_Pdfs/Floor_Fans_specs.pdf',
+    detailRoute: '/products/floor-mounted-hvls-fan',
   },
   {
     id: 'pole',
@@ -88,6 +91,7 @@ const products = [
     is3D: true,
     fanType: 'pole',
     specPdf: '/Spyro_fans_Pdfs/Pole_Fans_specs.pdf',
+    detailRoute: '/products/pole-mounted-hvls-fan',
   },
 ];
 
@@ -237,6 +241,7 @@ function Fan3DPanel({ fanType }) {
 function ProductSection({ product, index }) {
   const { ref, isInView } = useScrollAnimation({ once: true, amount: 0.15 });
   const [bulletsOpen, setBulletsOpen] = useState(true);
+  const navigate = useNavigate();
   const isImageRight = product.imageRight;
 
   return (
@@ -340,13 +345,23 @@ function ProductSection({ product, index }) {
             >
               Request Quote
             </button>
-            <button
-              onClick={() => handleDownloadAndOpen(product.specPdf)}
-              className="px-7 py-3 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105 cursor-pointer"
-              style={{ background: 'var(--bg-surface)', color: 'var(--text-primary)', border: '1px solid var(--border)' }}
-            >
-              Download Spec Sheet
-            </button>
+            {product.detailRoute ? (
+              <button
+                onClick={() => navigate(product.detailRoute)}
+                className="px-7 py-3 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105 cursor-pointer"
+                style={{ background: 'var(--bg-surface)', color: '#007BC9', border: '1px solid #007BC9' }}
+              >
+                View Product →
+              </button>
+            ) : (
+              <button
+                onClick={() => handleDownloadAndOpen(product.specPdf)}
+                className="px-7 py-3 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105 cursor-pointer"
+                style={{ background: 'var(--bg-surface)', color: 'var(--text-primary)', border: '1px solid var(--border)' }}
+              >
+                Download Spec Sheet
+              </button>
+            )}
           </div>
         </div>
       </div>

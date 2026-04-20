@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
@@ -11,6 +12,8 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const { theme } = useTheme();
   const isDark = theme === 'dark';
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40);
@@ -18,10 +21,31 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollTo = (id) => {
+  // After navigating to home, scroll to the target section
+  useEffect(() => {
+    if (location.pathname === '/' && location.state?.scrollTo) {
+      const id = location.state.scrollTo;
+      const attempt = (tries = 0) => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth' });
+        } else if (tries < 10) {
+          setTimeout(() => attempt(tries + 1), 100);
+        }
+      };
+      attempt();
+    }
+  }, [location]);
+
+  const scrollTo = (label) => {
     setMenuOpen(false);
-    const el = document.getElementById(id.toLowerCase().replace(' ', '-'));
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
+    const id = label.toLowerCase().replace(' ', '-');
+    if (location.pathname === '/') {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      navigate('/', { state: { scrollTo: id } });
+    }
   };
 
   return (
