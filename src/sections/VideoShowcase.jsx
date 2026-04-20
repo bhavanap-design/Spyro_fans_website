@@ -12,7 +12,7 @@ export default function VideoShowcase() {
   const { ref, isInView } = useScrollAnimation({ once: true, amount: 0.2 });
 
   return (
-    <section className="relative py-28" style={{ background: 'var(--bg-base)' }}>
+    <section id="video-showcase" className="relative py-28" style={{ background: 'var(--bg-base)' }}>
       {/* Top separator */}
       <div
         className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-px"

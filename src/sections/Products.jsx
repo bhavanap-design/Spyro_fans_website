@@ -1,5 +1,6 @@
 import { useState, lazy, Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
+import GalleryModal from '../components/GalleryModal';
 import { motion } from 'framer-motion';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
 import { Check, ChevronDown, ChevronUp } from 'lucide-react';
@@ -175,6 +176,7 @@ function SizesRow({ sizes }) {
 function Fan3DPanel({ fanType }) {
   const [speed, setSpeed] = useState(90);
   const [isDragging, setIsDragging] = useState(false);
+  const [galleryOpen, setGalleryOpen] = useState(false);
 
   return (
     <div className="flex flex-col gap-4">
@@ -213,6 +215,35 @@ function Fan3DPanel({ fanType }) {
             <FloorFan3D speed={speed} />
           )}
         </Suspense>
+
+        {/* View Gallery / Watch Video buttons */}
+        <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-3 px-4 z-10">
+          <button
+            onClick={() => setGalleryOpen(true)}
+            className="flex items-center gap-2 px-5 py-2 rounded-full text-xs font-semibold transition-all duration-300 hover:scale-105 cursor-pointer"
+            style={{
+              background: 'var(--bg-base)',
+              color: 'var(--text-primary)',
+              border: '1px solid var(--border)',
+              backdropFilter: 'blur(8px)',
+            }}
+          >
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
+            </svg>
+            View Gallery
+          </button>
+          <button
+            onClick={() => document.getElementById('video-showcase')?.scrollIntoView({ behavior: 'smooth' })}
+            className="flex items-center gap-2 px-5 py-2 rounded-full text-xs font-semibold text-white transition-all duration-300 hover:scale-105 hover:opacity-90 cursor-pointer"
+            style={{ background: 'linear-gradient(135deg, #E52929, #007BC9)' }}
+          >
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="white">
+              <polygon points="5,3 19,12 5,21"/>
+            </svg>
+            Watch Video
+          </button>
+        </div>
       </div>
 
       {/* Speed control slider */}
@@ -232,6 +263,10 @@ function Fan3DPanel({ fanType }) {
           />
         </Suspense>
       </div>
+
+      {galleryOpen && (
+        <GalleryModal fanType={fanType} onClose={() => setGalleryOpen(false)} />
+      )}
     </div>
   );
 }
@@ -351,7 +386,7 @@ function ProductSection({ product, index }) {
                 className="px-7 py-3 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105 cursor-pointer"
                 style={{ background: 'var(--bg-surface)', color: '#007BC9', border: '1px solid #007BC9' }}
               >
-                View Product →
+                Explore Product →
               </button>
             ) : (
               <button

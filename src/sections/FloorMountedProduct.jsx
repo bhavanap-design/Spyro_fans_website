@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Check } from 'lucide-react';
 import AirflowGraph from '../components/AirflowGraph';
+import AirflowCoverageGraph from '../components/AirflowCoverageGraph';
 
 const FloorFan3D = lazy(() => import('../components/FloorFan3D'));
 const SpeedControlSlider = lazy(() => import('../components/SpeedControlSlider'));
@@ -186,8 +187,11 @@ export default function FloorMountedProduct() {
               </Suspense>
             </div>
 
-            {/* Airflow distance graph */}
+            {/* Airflow velocity graph */}
             <AirflowGraph speed={speed} fanType="floor" />
+
+            {/* Airflow coverage cone */}
+            <AirflowCoverageGraph speed={speed} />
 
             {/* Gallery images */}
             <div className="grid grid-cols-2 gap-4">

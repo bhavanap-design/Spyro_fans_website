@@ -4,11 +4,11 @@ import { useScrollAnimation } from '../hooks/useScrollAnimation';
 import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 
 const images = [
-  { src: '/images/Gallery 1.jpg', label: 'Warehouse Installation' },
+  { src: '/images/FloorFan_Image.png', label: 'Warehouse Installation' },
   { src: '/images/Gallery 2.jpg', label: 'Factory Deployment' },
   { src: '/images/Gallery 3.jpg', label: 'Commercial Space' },
   { src: '/images/Gallery 5.jpg', label: 'Large Facility' },
-  { src: '/images/Gallery 6.jpg', label: 'Industrial Complex' },
+  { src: '/images/Floor_fan.png', label: 'Industrial Complex' },
   { src: '/images/Gallery 7.jpg', label: 'Sports Arena' },
   { src: '/images/Gallery 8.jpg', label: 'Logistics Centre' },
 ];

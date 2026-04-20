@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Check } from 'lucide-react';
 import AirflowGraph from '../components/AirflowGraph';
+import AirflowCoverageGraph from '../components/AirflowCoverageGraph';
 
 const PoleFan3D = lazy(() => import('../components/PoleFan3D'));
 const SpeedControlSlider = lazy(() => import('../components/SpeedControlSlider'));
@@ -176,8 +177,11 @@ export default function PoleMountedProduct() {
               </Suspense>
             </div>
 
-            {/* Airflow distance graph */}
+            {/* Airflow velocity graph */}
             <AirflowGraph speed={speed} fanType="pole" />
+
+            {/* Airflow coverage cone */}
+            <AirflowCoverageGraph speed={speed} />
 
             {/* Gallery images — 2+1 layout */}
             <div className="grid grid-cols-2 gap-4">

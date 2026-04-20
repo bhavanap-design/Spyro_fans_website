@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Check } from 'lucide-react';
 import AirflowGraph from '../components/AirflowGraph';
+import AirflowCoverageGraph from '../components/AirflowCoverageGraph';
 
 const HVLSFan3D = lazy(() => import('../components/HVLSFan3D'));
 const SpeedControlSlider = lazy(() => import('../components/SpeedControlSlider'));
@@ -179,8 +180,11 @@ export default function RoofMountedProduct() {
               </Suspense>
             </div>
 
-            {/* Airflow distance graph */}
+            {/* Airflow velocity graph */}
             <AirflowGraph speed={speed} fanType="hvls" />
+
+            {/* Airflow coverage cone */}
+            <AirflowCoverageGraph speed={speed} />
 
             {/* Gallery images — 2×2 grid */}
             <div className="grid grid-cols-2 gap-4">
