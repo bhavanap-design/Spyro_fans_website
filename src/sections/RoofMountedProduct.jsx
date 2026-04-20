@@ -2,6 +2,7 @@ import { useState, lazy, Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Check } from 'lucide-react';
+import AirflowGraph from '../components/AirflowGraph';
 
 const HVLSFan3D = lazy(() => import('../components/HVLSFan3D'));
 const SpeedControlSlider = lazy(() => import('../components/SpeedControlSlider'));
@@ -27,10 +28,10 @@ const specRows = [
 const models = ['Spyro 24', 'Spyro 20', 'Spyro 18', 'Spyro 16', 'Spyro 14', 'Spyro 12', 'Spyro 10', 'Spyro 8'];
 
 const galleryImages = [
-  { src: '/images/Gallery 1.jpg', alt: 'SpyroFans installation in warehouse' },
+  { src: '/images/Gallery 8.jpg', alt: 'SpyroFans installation in warehouse' },
   { src: '/images/Gallery 2.jpg', alt: 'SpyroFans in industrial facility' },
-  { src: '/images/Gallery 5.jpg', alt: 'Roof mounted fan overhead view' },
-  { src: '/images/Gallery 6.jpg', alt: 'SpyroFans installation detail' },
+  { src: '/images/roof_fan.png', alt: 'Roof mounted fan overhead view' },
+  { src: '/images/Gallery 9.png', alt: 'SpyroFans installation detail' },
 ];
 
 const bullets = [
@@ -177,6 +178,9 @@ export default function RoofMountedProduct() {
                 <SpeedControlSlider speed={speed} onChange={setSpeed} />
               </Suspense>
             </div>
+
+            {/* Airflow distance graph */}
+            <AirflowGraph speed={speed} fanType="hvls" />
 
             {/* Gallery images — 2×2 grid */}
             <div className="grid grid-cols-2 gap-4">

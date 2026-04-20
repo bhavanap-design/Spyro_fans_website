@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
 
-const VIDEO_ID = 'cUojTYS9_nI';
+const VIDEO_ID = 'ThpSQZ_Rfl8';
 const THUMBNAIL = `https://img.youtube.com/vi/${VIDEO_ID}/maxresdefault.jpg`;
 const EMBED_URL  = `https://www.youtube.com/embed/${VIDEO_ID}?autoplay=1&rel=0`;
 const WATCH_URL  = `https://www.youtube.com/watch?v=${VIDEO_ID}`;

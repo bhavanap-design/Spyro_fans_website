@@ -173,7 +173,7 @@ export default function Features() {
           <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-2 mb-6">
             <span className="w-1.5 h-1.5 rounded-full bg-[#E52929]" />
             <span className="text-xs tracking-widest uppercase font-medium" style={{ color: 'var(--text-muted)' }}>
-              Why HVLS
+              Why Spyro Fans
             </span>
           </div>
           <h2

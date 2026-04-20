@@ -2,6 +2,7 @@ import { useState, lazy, Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Check } from 'lucide-react';
+import AirflowGraph from '../components/AirflowGraph';
 
 const PoleFan3D = lazy(() => import('../components/PoleFan3D'));
 const SpeedControlSlider = lazy(() => import('../components/SpeedControlSlider'));
@@ -27,9 +28,9 @@ const specRows = [
 ];
 
 const galleryImages = [
-  { src: '/images/Gallery 1.jpg', alt: 'Pole fan installation' },
-  { src: '/images/Gallery 5.jpg', alt: 'Pole fan outdoor' },
-  { src: '/images/Gallery 6.jpg', alt: 'Pole fan detail' },
+  { src: '/images/Gallery 3.jpg', alt: 'Pole fan installation' },
+  { src: '/images/Pole_fan.jpg', alt: 'Pole fan outdoor' },
+  { src: '/images/Pole_fan_1.png', alt: 'Pole fan detail' },
 ];
 
 const bullets = [
@@ -174,6 +175,9 @@ export default function PoleMountedProduct() {
                 <SpeedControlSlider speed={speed} onChange={setSpeed} />
               </Suspense>
             </div>
+
+            {/* Airflow distance graph */}
+            <AirflowGraph speed={speed} fanType="pole" />
 
             {/* Gallery images — 2+1 layout */}
             <div className="grid grid-cols-2 gap-4">

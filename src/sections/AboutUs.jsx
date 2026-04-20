@@ -109,7 +109,7 @@ function VideoPlayer() {
 const stats = [
   { value: '2020', label: 'Founded' },
   { value: '40+',  label: 'Engineers' },
-  { value: '2,400+', label: 'Installations' },
+  { value: '1,000+', label: 'Installations' },
 ];
 
 export default function AboutUs() {

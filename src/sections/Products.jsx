@@ -392,15 +392,15 @@ export default function Products() {
         >
           <div className="flex-shrink-0">
             <div className="flex items-center gap-3 mb-4">
-              <div
+              {/* <div
                 className="w-8 h-0.5 rounded-full"
                 style={{ background: 'var(--accent-blue)' }}
-              />
+              /> */}
               <span
                 className="text-xs tracking-widest uppercase font-medium"
                 style={{ color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}
               >
-                Product Range
+                Our Products
               </span>
             </div>
             <h2

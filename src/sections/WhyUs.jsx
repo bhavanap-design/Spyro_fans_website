@@ -199,7 +199,7 @@ function MarqueeColumn({ items, direction = 'up', duration = 30 }) {
 // ─── Section ──────────────────────────────────────────────────────────────
 
 const stats = [
-  { value: '2,400+', label: 'Installations' },
+  { value: '1,000+', label: 'Installations' },
   { value: '1000+',    label: 'Clients' },
   { value: '98%',    label: 'Client retention' },
 ];

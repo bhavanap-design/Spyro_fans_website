@@ -2,6 +2,7 @@ import { useState, lazy, Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Check } from 'lucide-react';
+import AirflowGraph from '../components/AirflowGraph';
 
 const FloorFan3D = lazy(() => import('../components/FloorFan3D'));
 const SpeedControlSlider = lazy(() => import('../components/SpeedControlSlider'));
@@ -25,8 +26,8 @@ const specRows = [
 ];
 
 const galleryImages = [
-  { src: '/images/Gallery 3.jpg', alt: 'Floor fan in facility' },
-  { src: '/images/Gallery 7.jpg', alt: 'Floor fan installation' },
+  { src: '/images/Floor_fan.png', alt: 'Floor fan in facility' },
+  { src: '/images/FloorFan_Image.png', alt: 'Floor fan installation' },
   { src: '/images/Gallery 8.jpg', alt: 'Floor fan in use' },
 ];
 
@@ -184,6 +185,9 @@ export default function FloorMountedProduct() {
                 <SpeedControlSlider speed={speed} onChange={setSpeed} />
               </Suspense>
             </div>
+
+            {/* Airflow distance graph */}
+            <AirflowGraph speed={speed} fanType="floor" />
 
             {/* Gallery images */}
             <div className="grid grid-cols-2 gap-4">

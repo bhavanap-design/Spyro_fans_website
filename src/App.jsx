@@ -8,6 +8,7 @@ import './index.css';
 
 const Hero               = lazy(() => import('./sections/Hero'));
 const Features           = lazy(() => import('./sections/Features'));
+const FanComparison      = lazy(() => import('./sections/FanComparison'));
 const Products           = lazy(() => import('./sections/Products'));
 const WhyUs              = lazy(() => import('./sections/WhyUs'));
 const AboutUs            = lazy(() => import('./sections/AboutUs'));
@@ -38,6 +39,7 @@ function Site() {
       <Suspense fallback={<SectionLoader />}><Products /></Suspense>
       <Suspense fallback={<SectionLoader />}><WhyUs /></Suspense>
       <Suspense fallback={<SectionLoader />}><AboutUs /></Suspense>
+      <Suspense fallback={<SectionLoader />}><FanComparison /></Suspense>
       <Suspense fallback={<SectionLoader />}><Gallery /></Suspense>
       <Suspense fallback={<SectionLoader />}><VideoShowcase /></Suspense>
       <Suspense fallback={<SectionLoader />}><UseCases /></Suspense>
