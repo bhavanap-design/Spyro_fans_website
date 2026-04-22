@@ -29,7 +29,7 @@ export default function Footer() {
 
           {/* Center: Nav links */}
           <div className="flex gap-6">
-            {['Privacy', 'Terms', 'Careers'].map((link) => (
+            {['Privacy', 'Terms', 'Products'].map((link) => (
               <a
                 key={link}
                 href="#"

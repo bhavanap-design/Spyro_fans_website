@@ -4,9 +4,13 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, Check } from 'lucide-react';
 import AirflowGraph from '../components/AirflowGraph';
 import AirflowCoverageGraph from '../components/AirflowCoverageGraph';
+import GalleryModal from '../components/GalleryModal';
+import VideoModal from '../components/VideoModal';
 
 const HVLSFan3D = lazy(() => import('../components/HVLSFan3D'));
 const SpeedControlSlider = lazy(() => import('../components/SpeedControlSlider'));
+
+const VIDEO_ID = 'MwybkzSCgV0';
 
 // ─── Spec table data ──────────────────────────────────────────────────────────
 
@@ -123,6 +127,8 @@ function SpecTable() {
 
 export default function RoofMountedProduct() {
   const [speed, setSpeed] = useState(90);
+  const [galleryOpen, setGalleryOpen] = useState(false);
+  const [videoId, setVideoId] = useState(null);
   const navigate = useNavigate();
 
   return (
@@ -140,14 +146,14 @@ export default function RoofMountedProduct() {
         </button>
 
         {/* ── SECTION 1: Hero layout ── */}
-        <div className="grid lg:grid-cols-2 gap-16 items-start mb-20">
+        <div className="grid lg:grid-cols-2 gap-12 items-start mb-20">
 
-          {/* LEFT — 3D model + gallery images */}
+          {/* ── LEFT — 3D model + slider ── */}
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="flex flex-col gap-5"
+            className="flex flex-col gap-5 lg:sticky lg:top-28"
           >
             {/* 3D viewer */}
             <div
@@ -168,6 +174,30 @@ export default function RoofMountedProduct() {
               >
                 <HVLSFan3D mode="product" speed={speed} />
               </Suspense>
+
+              {/* View Gallery / Watch Video buttons */}
+              <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-3 px-4 z-10">
+                <button
+                  onClick={() => setGalleryOpen(true)}
+                  className="flex items-center gap-2 px-5 py-2 rounded-full text-xs font-semibold transition-all duration-300 hover:scale-105 cursor-pointer"
+                  style={{ background: 'var(--bg-base)', color: 'var(--text-primary)', border: '1px solid var(--border)', backdropFilter: 'blur(8px)' }}
+                >
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
+                  </svg>
+                  View Gallery
+                </button>
+                <button
+                  onClick={() => setVideoId(VIDEO_ID)}
+                  className="flex items-center gap-2 px-5 py-2 rounded-full text-xs font-semibold text-white transition-all duration-300 hover:scale-105 hover:opacity-90 cursor-pointer"
+                  style={{ background: 'linear-gradient(135deg, #E52929, #007BC9)' }}
+                >
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="white">
+                    <polygon points="5,3 19,12 5,21"/>
+                  </svg>
+                  Watch Video
+                </button>
+              </div>
             </div>
 
             {/* Speed slider */}
@@ -179,111 +209,98 @@ export default function RoofMountedProduct() {
                 <SpeedControlSlider speed={speed} onChange={setSpeed} />
               </Suspense>
             </div>
-
-            {/* Airflow velocity graph */}
-            <AirflowGraph speed={speed} fanType="hvls" />
-
-            {/* Airflow coverage cone */}
-            <AirflowCoverageGraph speed={speed} />
-
-            {/* Gallery images — 2×2 grid */}
-            <div className="grid grid-cols-2 gap-4">
-              {galleryImages.map((img) => (
-                <div
-                  key={img.src}
-                  className="rounded-2xl overflow-hidden"
-                  style={{ border: '1px solid var(--border)', aspectRatio: '4/3' }}
-                >
-                  <img
-                    src={img.src}
-                    alt={img.alt}
-                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                  />
-                </div>
-              ))}
-            </div>
           </motion.div>
 
-          {/* RIGHT — Product info */}
+          {/* ── RIGHT — graphs + product info ── */}
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-            className="flex flex-col gap-7 lg:sticky lg:top-28"
+            className="flex flex-col gap-6"
           >
-            {/* Badge */}
-            <div className="flex items-center gap-3">
-              <span
-                className="text-xs font-semibold px-3 py-1 rounded-full"
-                style={{ background: '#E52929', color: '#fff' }}
-              >
-                Bestseller
-              </span>
-              <span className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>01</span>
-            </div>
+            {/* Graphs block */}
+            <AirflowGraph speed={speed} fanType="hvls" />
+            <AirflowCoverageGraph speed={speed} />
 
-            {/* Title */}
-            <div>
-              <p className="text-xs uppercase tracking-widest mb-1.5" style={{ color: 'var(--text-muted)' }}>
-                SpyroCeiling Pro
-              </p>
-              <h1
-                className="text-4xl lg:text-5xl font-bold leading-tight"
-                style={{ color: 'var(--text-primary)', fontFamily: 'Poppins, sans-serif' }}
-              >
-                Roof Mounted<br />
-                <span className="gradient-text">HVLS Fan</span>
-              </h1>
-            </div>
+            {/* Divider */}
+            <div className="h-px" style={{ background: 'var(--border)' }} />
 
-            {/* Description */}
-            <p className="text-base leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-              Permanently suspended from the structural ceiling, the SpyroCeiling Pro delivers uniform airflow across your entire facility. Designed for warehouses, distribution centres, and large manufacturing plants where floor space is sacred.
-            </p>
-
-            {/* Bullets */}
-            <ul className="flex flex-col gap-3">
-              {bullets.map((b) => (
-                <li key={b} className="flex items-start gap-3 text-sm">
-                  <Check size={14} className="mt-0.5 flex-shrink-0" style={{ color: '#007BC9' }} />
-                  <span style={{ color: 'var(--text-secondary)' }}>{b}</span>
-                </li>
-              ))}
-            </ul>
-
-            {/* Available sizes */}
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: 'var(--text-muted)' }}>
-                Available Sizes
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {['8 ft', '10 ft', '12 ft', '14 ft', '16 ft', '18 ft', '20 ft', '24 ft'].map((s) => (
-                  <span
-                    key={s}
-                    className="px-4 py-1.5 rounded-full text-sm font-medium"
-                    style={{ background: 'var(--bg-surface)', color: 'var(--text-secondary)', border: '1px solid var(--border)' }}
-                  >
-                    {s}
-                  </span>
-                ))}
+            {/* Product info */}
+            <div className="flex flex-col gap-6">
+              {/* Badge */}
+              <div className="flex items-center gap-3">
+                <span
+                  className="text-xs font-semibold px-3 py-1 rounded-full"
+                  style={{ background: '#E52929', color: '#fff' }}
+                >
+                  Bestseller
+                </span>
+                <span className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>01</span>
               </div>
-            </div>
 
-            {/* CTAs */}
-            <div className="flex flex-wrap gap-3 pt-2">
-              <button
-                className="px-8 py-3.5 rounded-full text-sm font-semibold text-white transition-all duration-300 hover:opacity-90 hover:scale-105 cursor-pointer"
-                style={{ background: 'linear-gradient(135deg, #E52929, #007BC9)' }}
-              >
-                Request Quote
-              </button>
-              <button
-                onClick={() => handleDownloadAndOpen('/Spyro_fans_Pdfs/Roof_Fans_specs.pdf')}
-                className="px-8 py-3.5 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105 cursor-pointer"
-                style={{ background: 'var(--bg-surface)', color: 'var(--text-primary)', border: '1px solid var(--border)' }}
-              >
-                Download Spec Sheet
-              </button>
+              {/* Title */}
+              <div>
+                {/* <p className="text-xs uppercase tracking-widest mb-1.5" style={{ color: 'var(--text-muted)' }}>
+                  SpyroCeiling Pro
+                </p> */}
+                <h1
+                  className="text-4xl lg:text-5xl font-bold leading-tight"
+                  style={{ color: 'var(--text-primary)', fontFamily: 'Poppins, sans-serif' }}
+                >
+                  Roof Mounted<br />
+                  <span className="gradient-text">HVLS Fan</span>
+                </h1>
+              </div>
+
+              {/* Description */}
+              <p className="text-base leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                Permanently suspended from the structural ceiling, the SpyroCeiling Pro delivers uniform airflow across your entire facility. Designed for warehouses, distribution centres, and large manufacturing plants where floor space is sacred.
+              </p>
+
+              {/* Bullets */}
+              <ul className="flex flex-col gap-3">
+                {bullets.map((b) => (
+                  <li key={b} className="flex items-start gap-3 text-sm">
+                    <Check size={14} className="mt-0.5 flex-shrink-0" style={{ color: '#007BC9' }} />
+                    <span style={{ color: 'var(--text-secondary)' }}>{b}</span>
+                  </li>
+                ))}
+              </ul>
+
+              {/* Available sizes */}
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: 'var(--text-muted)' }}>
+                  Available Sizes
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {['8 ft', '10 ft', '12 ft', '14 ft', '16 ft', '18 ft', '20 ft', '24 ft'].map((s) => (
+                    <span
+                      key={s}
+                      className="px-4 py-1.5 rounded-full text-sm font-medium"
+                      style={{ background: 'var(--bg-surface)', color: 'var(--text-secondary)', border: '1px solid var(--border)' }}
+                    >
+                      {s}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* CTAs */}
+              <div className="flex flex-wrap gap-3 pt-1">
+                <button
+                  className="px-8 py-3.5 rounded-full text-sm font-semibold text-white transition-all duration-300 hover:opacity-90 hover:scale-105 cursor-pointer"
+                  style={{ background: 'linear-gradient(135deg, #E52929, #007BC9)' }}
+                >
+                  Request Quote
+                </button>
+                <button
+                  onClick={() => handleDownloadAndOpen('/Spyro_fans_Pdfs/Roof_Fans_specs.pdf')}
+                  className="px-8 py-3.5 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105 cursor-pointer"
+                  style={{ background: 'var(--bg-surface)', color: 'var(--text-primary)', border: '1px solid var(--border)' }}
+                >
+                  Download Spec Sheet
+                </button>
+              </div>
             </div>
           </motion.div>
         </div>
@@ -306,7 +323,7 @@ export default function RoofMountedProduct() {
               className="text-3xl lg:text-4xl font-bold"
               style={{ color: 'var(--text-primary)', fontFamily: 'Poppins, sans-serif' }}
             >
-              Full model <span className="gradient-text">comparison</span>
+              Variant <span className="gradient-text">comparison</span>
             </h2>
           </div>
 
@@ -314,6 +331,9 @@ export default function RoofMountedProduct() {
         </motion.div>
 
       </div>
+
+      {galleryOpen && <GalleryModal fanType="hvls" onClose={() => setGalleryOpen(false)} />}
+      <VideoModal videoId={videoId} onClose={() => setVideoId(null)} />
     </div>
   );
 }

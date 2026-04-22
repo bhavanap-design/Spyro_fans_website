@@ -146,16 +146,16 @@ export default function AboutUs() {
               className="text-4xl lg:text-5xl font-bold leading-tight mb-6"
               style={{ color: 'var(--text-primary)', fontFamily: 'Poppins, sans-serif' }}
             >
-              Two decades of{' '}
-              <span className="gradient-text">airflow excellence</span>
+              Years of Engineering{' '}
+              <span className="gradient-text">Airflow Excellence</span>
             </h2>
 
             <p className="text-base leading-relaxed mb-5" style={{ color: 'var(--text-secondary)' }}>
-              SpyroFans was born from a simple observation — most large spaces are thermally uncomfortable, and conventional fans can't solve the problem efficiently. Since 2020, we have been engineering HVLS fans that redefine what's possible in industrial comfort.
+              Our HVLS fan solutions for industrial environments are designed to improve airflow, regulate temperature, and enhance comfort across large manufacturing and production spaces. By circulating massive volumes of air efficiently, they help reduce heat stress, improve working conditions, and lower overall energy consumption.
             </p>
 
             <p className="text-base leading-relaxed mb-8" style={{ color: 'var(--text-secondary)' }}>
-              Our gearless direct-drive motors, aircraft-grade blades, and smart variable-speed controllers are designed and tested in-house to meet the world's most demanding environments — from Arctic-cold logistics centres to tropical agricultural facilities.
+              Our team of 40 engineers consists of experts in  electromechanics, mechanical, electronics, and thermal engineering. Before deploying our fans we do FEA simulation to make sure our product meets the promises.
             </p>
 
             {/* Stats */}
@@ -190,7 +190,7 @@ export default function AboutUs() {
 
             {/* Caption */}
             <p className="text-xs text-center mt-3" style={{ color: 'var(--text-muted)' }}>
-              See SpyroFans in action — real installations, real results.
+              See Spyro Fans in action with real installations and proven results.
             </p>
           </motion.div>
         </div>

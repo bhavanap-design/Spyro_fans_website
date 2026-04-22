@@ -242,7 +242,7 @@ export default function PoleFan3D({ speed }) {
           autoRotateSpeed={0.4}
         />
 
-        <group scale={0.65} position={[0, 0.8, 0]}>
+        <group scale={0.6} position={[0, 0.9, 0]}>
           <FanAssembly speed={speed} />
         </group>
       </Canvas>

@@ -68,7 +68,11 @@ export default function Navbar() {
     >
       <nav className="max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between py-4">
         {/* Logo */}
-        <a href="#" className="flex items-center gap-2.5 group">
+        <button
+          onClick={() => location.pathname === '/' ? window.scrollTo({ top: 0, behavior: 'smooth' }) : navigate('/')}
+          className="flex items-center gap-2.5 group cursor-pointer"
+          aria-label="Go to home"
+        >
           <svg 
             className="h-6 w-auto"
             style={{ animation: "spin 8s linear infinite" }}
@@ -82,7 +86,7 @@ export default function Navbar() {
             alt="SpyroFans logo"
             className="h-5 w-auto transition-opacity duration-300"
           />
-        </a>
+        </button>
 
         {/* Desktop links */}
         <ul className="hidden md:flex items-center gap-8">

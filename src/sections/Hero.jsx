@@ -4,7 +4,7 @@ import { ChevronDown } from 'lucide-react';
 
 const HVLSFan3D = lazy(() => import('../components/HVLSFan3D'));
 
-const ROTATING_WORDS = ['Warehouses', 'Factories', 'Hangars', 'Arenas', 'Farms'];
+const ROTATING_WORDS = ['Warehouses', 'Factories', 'Holy Places', 'Arenas', 'Farms'];
 
 const fadeUp = {
   initial: { opacity: 0, y: 30 },
@@ -55,11 +55,11 @@ export default function Hero() {
         }}
       />
 
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-12 pt-28 pb-20">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-12 pt-40 pb-28">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center min-h-[75vh]">
           {/* Left column: Text content */}
           <div className="flex flex-col justify-center order-2 lg:order-1">
-            <motion.div
+            {/* <motion.div
               {...fadeUp}
               transition={{ duration: 0.5, delay: 0.1 }}
               className="inline-flex items-center gap-2.5 rounded-full px-5 py-2.5 mb-8 w-fit"
@@ -85,7 +85,7 @@ export default function Hero() {
               >
                 Industrial HVLS Technology
               </span>
-            </motion.div>
+            </motion.div> */}
 
             <motion.h1
               {...fadeUp}
@@ -165,7 +165,7 @@ export default function Hero() {
             </motion.div>
 
             {/* Stats row */}
-            <motion.div
+            {/* <motion.div
               {...fadeUp}
               transition={{ duration: 0.6, delay: 0.65 }}
               className="flex gap-10 mt-14 pt-10"
@@ -187,7 +187,7 @@ export default function Hero() {
                   </div>
                 </div>
               ))}
-            </motion.div>
+            </motion.div> */}
           </div>
 
           {/* Right column: 3D Fan Model */}

@@ -16,13 +16,13 @@ const GALLERY = {
   floor: [
     { src: '/images/Floor_fan.png',       caption: 'SpyroStand Elite' },
     { src: '/images/FloorFan_Image.png',  caption: 'Floor fan installation' },
-    { src: '/images/Gallery 8.jpg',       caption: 'In-facility use' },
+    // { src: '/images/Gallery 8.jpg',       caption: 'In-facility use' },
   ],
   pole: [
     { src: '/images/Gallery 3.jpg',   caption: 'Pole fan installation' },
     { src: '/images/Pole_fan.jpg',    caption: 'Outdoor deployment' },
     { src: '/images/Pole_fan_1.png',  caption: 'SpyroPole Flex' },
-    { src: '/images/Gallery 5.jpg',   caption: 'Open-sided structure' },
+    // { src: '/images/Gallery 5.jpg',   caption: 'Open-sided structure' },
   ],
 };
 
@@ -74,7 +74,7 @@ function ModalContent({ fanType, onClose }) {
         alignItems: 'center',
         justifyContent: 'center',
         padding: '16px',
-        background: 'rgba(0,0,0,0.85)',
+        background: 'rgba(0,0,0,0.7)',
         backdropFilter: 'blur(6px)',
         WebkitBackdropFilter: 'blur(6px)',
       }}

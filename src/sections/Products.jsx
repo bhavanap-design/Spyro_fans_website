@@ -1,6 +1,7 @@
 import { useState, lazy, Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 import GalleryModal from '../components/GalleryModal';
+import VideoModal from '../components/VideoModal';
 import { motion } from 'framer-motion';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
 import { Check, ChevronDown, ChevronUp } from 'lucide-react';
@@ -31,9 +32,9 @@ const products = [
     tag: 'Bestseller',
     tagColor: '#E52929',
     title: 'Roof Mounted HVLS Fan',
-    subtitle: 'SpyroCeiling Pro',
+    // subtitle: 'SpyroCeiling Pro',
     description:
-      'Permanently suspended from the structural ceiling, the SpyroCeiling Pro delivers uniform airflow across your entire facility. Designed for warehouses, distribution centres, and large manufacturing plants where floor space is sacred.',
+      'Ceiling-mounted HVLS systems utilize large-diameter blades and low-speed rotation to move high volumes of air efficiently, ensuring uniform airflow across large spaces with minimal energy consumption.',
     bullets: [
       'Covers up to 2,000 m² with a single unit',
       'Aircraft-grade aluminium blades — zero corrosion',
@@ -54,9 +55,9 @@ const products = [
     tag: 'Portable',
     tagColor: '#007BC9',
     title: 'Floor Mounted HVLS Fan',
-    subtitle: 'SpyroStand Elite',
+    // subtitle: 'SpyroStand Elite',
     description:
-      'The SpyroStand Elite gives you industrial-grade airflow without a permanent installation. Perfect for loading docks, temporary workspaces, events, and any facility where flexibility is the priority. Lockable casters for safe repositioning.',
+      'Floor-mounted HVLS fans are designed for mobility and efficient airflow, ensuring consistent air circulation across large areas without the need for permanent installation, making them ideal for flexible and dynamic work environments.',
     bullets: [
       'Height-adjustable column — 2.2 m to 3.8 m',
       'Heavy-duty lockable casters for easy relocation',
@@ -77,9 +78,9 @@ const products = [
     tag: 'Outdoor Ready',
     tagColor: '#E52929',
     title: 'Pole Mounted HVLS Fan',
-    subtitle: 'SpyroPole Flex',
+    // subtitle: 'SpyroPole Flex',
     description:
-      'When there is no roof to hang from, the SpyroPole Flex is your answer. Mounted on a structural steel pole, it serves open-sided buildings, aircraft hangars, covered sports facilities, and outdoor loading areas with the same industrial-grade performance.',
+      'When there is no roof for installation, pole-mounted HVLS fans provide elevated airflow solutions, delivering uniform air distribution and efficient ventilation across large open and semi-outdoor spaces.',
     bullets: [
       'Hot-dip galvanised pole — corrosion-proof for outdoor use',
       'Adjustable blade tilt up to 15° for directional airflow',
@@ -171,12 +172,21 @@ function SizesRow({ sizes }) {
   );
 }
 
+// ─── Video map (change values here to assign different videos per product) ──
+
+const productVideos = {
+  hvls:  'MwybkzSCgV0',
+  floor: 'MwybkzSCgV0',
+  pole:  'MwybkzSCgV0',
+};
+
 // ─── 3D panel with speed slider ────────────────────────────────────────────
 
 function Fan3DPanel({ fanType }) {
   const [speed, setSpeed] = useState(90);
   const [isDragging, setIsDragging] = useState(false);
   const [galleryOpen, setGalleryOpen] = useState(false);
+  const [videoId, setVideoId] = useState(null);
 
   return (
     <div className="flex flex-col gap-4">
@@ -234,7 +244,7 @@ function Fan3DPanel({ fanType }) {
             View Gallery
           </button>
           <button
-            onClick={() => document.getElementById('video-showcase')?.scrollIntoView({ behavior: 'smooth' })}
+            onClick={() => setVideoId(productVideos[fanType])}
             className="flex items-center gap-2 px-5 py-2 rounded-full text-xs font-semibold text-white transition-all duration-300 hover:scale-105 hover:opacity-90 cursor-pointer"
             style={{ background: 'linear-gradient(135deg, #E52929, #007BC9)' }}
           >
@@ -267,6 +277,8 @@ function Fan3DPanel({ fanType }) {
       {galleryOpen && (
         <GalleryModal fanType={fanType} onClose={() => setGalleryOpen(false)} />
       )}
+
+      <VideoModal videoId={videoId} onClose={() => setVideoId(null)} />
     </div>
   );
 }
@@ -447,11 +459,11 @@ export default function Products() {
               <span style={{ color: 'var(--accent-blue)' }}>every space</span>
             </h2>
             <p className="text-lg max-w-xl" style={{ color: 'var(--text-secondary)' }}>
-              From massive warehouses to covered outdoor venues — SpyroFans has
+              From large warehouses to open commercial spaces, SpyroFans has
               a solution engineered for your exact application.
             </p>
           </div>
-          <div className="hidden lg:block flex-grow h-px mb-4" style={{ background: 'var(--border)' }} />
+          {/* <div className="hidden lg:block flex-grow h-px mb-4" style={{ background: 'var(--border)' }} /> */}
         </motion.div>
 
         {/* Individual product sections */}

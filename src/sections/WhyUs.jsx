@@ -235,12 +235,12 @@ export default function WhyUs() {
               className="text-4xl lg:text-5xl font-bold mb-5 leading-tight"
               style={{ color: 'var(--text-primary)', fontFamily: 'Poppins, sans-serif' }}
             >
-              Trusted by{' '}
-              <span className="gradient-text">industry leaders</span>
+              What Our{' '}
+              <span className="gradient-text">Customers Say</span>
             </h2>
 
             <p className="text-base leading-relaxed mb-10" style={{ color: 'var(--text-secondary)' }}>
-              From logistics giants to precision manufacturers — SpyroFans is the choice of operations professionals who demand the best.
+              From warehouses to large facilities, our clients share how Spyro HVLS fans have transformed their airflow systems.
             </p>
 
             {/* Stats */}

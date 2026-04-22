@@ -141,10 +141,10 @@ export default function FanComparison() {
             className="text-4xl lg:text-5xl font-bold mb-4"
             style={{ color: 'var(--text-primary)', fontFamily: 'Poppins, sans-serif' }}
           >
-            Why <span className="gradient-text">HVLS</span> beats conventional fans
+            Why <span className="gradient-text">Spyro HVLS</span> beats conventional fans
           </h2>
-          <p className="text-lg max-w-xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
-            One SpyroFans HVLS unit replaces up to 18 conventional fans — at a fraction of the running cost.
+          <p className="text-lg max-w-3xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
+            Compare how HVLS fans deliver better airflow, greater coverage, and improved efficiency than traditional fans.
           </p>
         </motion.div>
 

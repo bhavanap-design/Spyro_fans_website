@@ -4,6 +4,10 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, Check } from 'lucide-react';
 import AirflowGraph from '../components/AirflowGraph';
 import AirflowCoverageGraph from '../components/AirflowCoverageGraph';
+import GalleryModal from '../components/GalleryModal';
+import VideoModal from '../components/VideoModal';
+
+const VIDEO_ID = 'MwybkzSCgV0';
 
 const PoleFan3D = lazy(() => import('../components/PoleFan3D'));
 const SpeedControlSlider = lazy(() => import('../components/SpeedControlSlider'));
@@ -120,6 +124,8 @@ function SpecTable() {
 
 export default function PoleMountedProduct() {
   const [speed, setSpeed] = useState(90);
+  const [galleryOpen, setGalleryOpen] = useState(false);
+  const [videoId, setVideoId] = useState(null);
   const navigate = useNavigate();
 
   return (
@@ -137,14 +143,14 @@ export default function PoleMountedProduct() {
         </button>
 
         {/* ── SECTION 1: Hero layout ── */}
-        <div className="grid lg:grid-cols-2 gap-16 items-start mb-20">
+        <div className="grid lg:grid-cols-2 gap-12 items-start mb-20">
 
-          {/* LEFT — 3D model + gallery images */}
+          {/* ── LEFT — 3D model + slider ── */}
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="flex flex-col gap-5"
+            className="flex flex-col gap-5 lg:sticky lg:top-28"
           >
             {/* 3D viewer */}
             <div
@@ -165,6 +171,30 @@ export default function PoleMountedProduct() {
               >
                 <PoleFan3D speed={speed} />
               </Suspense>
+
+              {/* View Gallery / Watch Video buttons */}
+              <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-3 px-4 z-10">
+                <button
+                  onClick={() => setGalleryOpen(true)}
+                  className="flex items-center gap-2 px-5 py-2 rounded-full text-xs font-semibold transition-all duration-300 hover:scale-105 cursor-pointer"
+                  style={{ background: 'var(--bg-base)', color: 'var(--text-primary)', border: '1px solid var(--border)', backdropFilter: 'blur(8px)' }}
+                >
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
+                  </svg>
+                  View Gallery
+                </button>
+                <button
+                  onClick={() => setVideoId(VIDEO_ID)}
+                  className="flex items-center gap-2 px-5 py-2 rounded-full text-xs font-semibold text-white transition-all duration-300 hover:scale-105 hover:opacity-90 cursor-pointer"
+                  style={{ background: 'linear-gradient(135deg, #E52929, #007BC9)' }}
+                >
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="white">
+                    <polygon points="5,3 19,12 5,21"/>
+                  </svg>
+                  Watch Video
+                </button>
+              </div>
             </div>
 
             {/* Speed slider */}
@@ -176,38 +206,24 @@ export default function PoleMountedProduct() {
                 <SpeedControlSlider speed={speed} onChange={setSpeed} />
               </Suspense>
             </div>
-
-            {/* Airflow velocity graph */}
-            <AirflowGraph speed={speed} fanType="pole" />
-
-            {/* Airflow coverage cone */}
-            <AirflowCoverageGraph speed={speed} />
-
-            {/* Gallery images — 2+1 layout */}
-            <div className="grid grid-cols-2 gap-4">
-              {galleryImages.map((img) => (
-                <div
-                  key={img.src}
-                  className="rounded-2xl overflow-hidden"
-                  style={{ border: '1px solid var(--border)', aspectRatio: '4/3' }}
-                >
-                  <img
-                    src={img.src}
-                    alt={img.alt}
-                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                  />
-                </div>
-              ))}
-            </div>
           </motion.div>
 
-          {/* RIGHT — Product info */}
+          {/* ── RIGHT — graphs + product info ── */}
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-            className="flex flex-col gap-7 lg:sticky lg:top-28"
+            className="flex flex-col gap-6"
           >
+            {/* Graphs block */}
+            <AirflowGraph speed={speed} fanType="pole" />
+            <AirflowCoverageGraph speed={speed} />
+
+            {/* Divider */}
+            <div className="h-px" style={{ background: 'var(--border)' }} />
+
+            {/* Product info */}
+            <div className="flex flex-col gap-6">
             {/* Badge */}
             <div className="flex items-center gap-3">
               <span
@@ -221,9 +237,9 @@ export default function PoleMountedProduct() {
 
             {/* Title */}
             <div>
-              <p className="text-xs uppercase tracking-widest mb-1.5" style={{ color: 'var(--text-muted)' }}>
+              {/* <p className="text-xs uppercase tracking-widest mb-1.5" style={{ color: 'var(--text-muted)' }}>
                 SpyroPole Flex
-              </p>
+              </p> */}
               <h1
                 className="text-4xl lg:text-5xl font-bold leading-tight"
                 style={{ color: 'var(--text-primary)', fontFamily: 'Poppins, sans-serif' }}
@@ -235,7 +251,7 @@ export default function PoleMountedProduct() {
 
             {/* Description */}
             <p className="text-base leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-              When there is no roof to hang from, the SpyroPole Flex is your answer. Mounted on a structural steel pole, it serves open-sided buildings, aircraft hangars, covered sports facilities, and outdoor loading areas with the same industrial-grade performance.
+              When there is no roof for installation, pole-mounted HVLS fans provide elevated airflow solutions, delivering uniform air distribution and efficient ventilation across large open and semi-outdoor spaces.
             </p>
 
             {/* Bullets */}
@@ -282,6 +298,7 @@ export default function PoleMountedProduct() {
                 Download Spec Sheet
               </button>
             </div>
+            </div>
           </motion.div>
         </div>
 
@@ -302,7 +319,7 @@ export default function PoleMountedProduct() {
               className="text-3xl lg:text-4xl font-bold"
               style={{ color: 'var(--text-primary)', fontFamily: 'Poppins, sans-serif' }}
             >
-              Full model <span className="gradient-text">comparison</span>
+              Variant <span className="gradient-text">comparison</span>
             </h2>
           </div>
 
@@ -310,6 +327,9 @@ export default function PoleMountedProduct() {
         </motion.div>
 
       </div>
+
+      {galleryOpen && <GalleryModal fanType="pole" onClose={() => setGalleryOpen(false)} />}
+      <VideoModal videoId={videoId} onClose={() => setVideoId(null)} />
     </div>
   );
 }

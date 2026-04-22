@@ -397,7 +397,7 @@ export default function FloorFan3D({ speed }) {
       <Canvas
         shadows
         camera={{
-          position: [3, -1.5, 7],
+          position: [-2, -1.5, 7],
           fov: 40,
           near: 0.1,
           far: 100,
@@ -444,11 +444,11 @@ export default function FloorFan3D({ speed }) {
           enableZoom={false}
           minPolarAngle={Math.PI * 0.45}
           maxPolarAngle={Math.PI * 0.55}
-          autoRotate
+          autoRotate={false}
           autoRotateSpeed={0.5}
         />
 
-        <group scale={0.65} position={[0, 0.3, 0]}>
+        <group scale={0.65} position={[0, 0.6, 0]}>
           <FloorFanAssembly speed={speed} />
         </group>
       </Canvas>

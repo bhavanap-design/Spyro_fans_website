@@ -45,7 +45,7 @@ export default function VideoShowcase() {
             Watch <span className="gradient-text">SpyroFans</span> perform
           </h2>
           <p className="text-lg max-w-xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
-            See how our HVLS fans transform airflow in real industrial environments.
+            Experience how Spyro HVLS fans deliver smooth, wide-area airflow in real-world applications.
           </p>
         </motion.div>
 

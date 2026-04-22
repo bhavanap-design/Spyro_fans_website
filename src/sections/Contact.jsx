@@ -55,7 +55,7 @@ export default function Contact() {
             <span className="gradient-text">extraordinary</span>
           </h2>
           <p className="text-lg max-w-xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
-            Tell us about your space — we'll design the perfect airflow solution for you.
+            Tell us about your space and we’ll recommend the right airflow solution.
           </p>
         </motion.div>
 
@@ -149,12 +149,12 @@ export default function Contact() {
 
                 <div>
                   <label className="block text-xs mb-2" style={{ color: 'var(--text-muted)' }}>Fan Type Interested In</label>
-                  <select name="type" value={form.type} onChange={handleChange} style={{ ...inputStyle, cursor: 'pointer' }}>
+                  <select name="type" value={form.type} onChange={handleChange} style={{ ...inputStyle, cursor: 'pointer', paddingRight: 40, appearance: 'none', WebkitAppearance: 'none', backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238888A0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 12px center' }}>
                     <option value="">Select fan type…</option>
                     <option value="roof">Roof Mounted HVLS Fan</option>
                     <option value="floor">Floor Mounted HVLS Fan</option>
                     <option value="pole">Pole Mounted HVLS Fan</option>
-                    <option value="unsure">Not sure yet</option>
+                    {/* <option value="unsure">Not sure yet</option> */}
                   </select>
                 </div>
 

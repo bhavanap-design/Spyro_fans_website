@@ -81,10 +81,10 @@ export default function SpeedControlSlider({ speed, onChange, isDragging }) {
       {/* Speed description */}
       <p className="text-xs mt-2" style={{ color: 'var(--text-muted)' }}>
         {speed <= 70
-          ? 'Gentle circulation — destratification mode'
+          ? 'Gentle airflow for air circulation'
           : speed <= 100
-          ? 'Comfort cooling — recommended for occupied spaces'
-          : 'High performance — maximum airflow output'}
+          ? 'Steady airflow for active environments'
+          : 'High speed operation for maximum performance'}
       </p>
 
       {/* Dynamic performance stats */}

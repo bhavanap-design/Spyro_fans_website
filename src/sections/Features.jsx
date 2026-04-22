@@ -184,7 +184,7 @@ export default function Features() {
             <span className="gradient-text">extraordinary</span>
           </h2>
           <p className="text-lg max-w-xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
-            Every SpyroFan is designed with one goal — deliver maximum comfort at minimum cost.
+            Every SpyroFan is designed with one goal - deliver maximum comfort at minimum cost.
           </p>
         </motion.div>
 

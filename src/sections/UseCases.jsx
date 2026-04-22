@@ -8,44 +8,44 @@ const cases = [
   {
     id: 'warehouse',
     title: 'Warehouses',
-    description: 'Keep workers comfortable across massive distribution centres while reducing stratification energy loss by up to 30%.',
+    description: 'Maintain consistent airflow across large spaces while reducing heat buildup and improving efficiency.',
     image: '/Spyro_Application_Images/image 18.png',
     tag: 'Industrial',
   },
   {
     id: 'factory',
     title: 'Factories',
-    description: 'Improve worker productivity and reduce heat stress in manufacturing environments with continuous gentle airflow.',
+    description: 'Enhance worker comfort and productivity by delivering steady airflow that minimizes heat stress in demanding environments.',
     image: '/images/Gallery 2.jpg',
     tag: 'Manufacturing',
   },
   {
     id: 'commercial',
     title: 'Commercial Spaces',
-    description: 'Enhance the customer experience in retail, showrooms, and leisure facilities with silent, invisible comfort.',
+    description: 'Create a comfortable environment for customers and staff with quiet, efficient airflow across large open areas.',
     image: '/images/Gallery 3.jpg',
     tag: 'Commercial',
   },
   {
-    id: 'agriculture',
-    title: 'Agricultural',
-    description: 'Improve animal welfare and reduce mortality rates in livestock buildings with perfectly calibrated airflow.',
+    id: 'holyplaces',
+    title: 'Holy Places',
+    description: 'Create a peaceful and calming atmosphere with consistent, silent air circulation across large prayer spaces.',
     image: '/Spyro_Application_Images/image 19.png',
-    tag: 'Agricultural',
+    tag: 'Religious',
   },
   {
     id: 'sports',
     title: 'Sports Facilities',
-    description: 'From indoor arenas to covered training grounds — maintain comfortable playing conditions all year round.',
+    description: 'Maintain optimal airflow to ensure consistent comfort during play, training sessions, and high-activity environments.',
     image: '/images/Gallery 6.jpg',
     tag: 'Sports',
   },
   {
-    id: 'aviation',
-    title: 'Aviation Hangars',
-    description: 'Massive open-span structures with strict air quality requirements — HVLS is the only practical solution.',
+    id: 'Stadium',
+    title: 'Stadiums',
+    description: 'Provide wide coverage airflow for massive, high-volume spaces while ensuring efficient and uniform air distribution.',
     image: '/Spyro_Application_Images/fan_side_angle.png',
-    tag: 'Aviation',
+    tag: 'stadium',
   },
 ];
 
@@ -156,11 +156,11 @@ export default function UseCases() {
             className="text-4xl lg:text-5xl font-bold mb-4"
             style={{ color: 'var(--text-primary)', fontFamily: 'Poppins, sans-serif' }}
           >
-            Wherever people{' '}
-            <span className="gradient-text">work and live</span>
+            <span className="gradient-text">Airflow Solutions</span> {' '}
+            Across Industries
           </h2>
           <p className="text-lg max-w-xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
-            SpyroFans are trusted across dozens of industries — anywhere large-space comfort matters.
+            From large-scale facilities to open spaces, Spyro fans provide efficient airflow solutions.
           </p>
         </motion.div>
 
